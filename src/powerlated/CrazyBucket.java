@@ -58,6 +58,8 @@ public final class CrazyBucket extends JavaPlugin {
 				new KitEvents.Pyrotechnic(), this);
 		getServer().getPluginManager().registerEvents(
 				new KitEvents.Orc(), this);
+		getServer().getPluginManager().registerEvents(
+				new KitEvents.Ghost(), this);
 		Events.plugin = this;
 		KitEvents.cb = this;
 	}

@@ -88,7 +88,7 @@ public final class Events implements Listener {
 	@EventHandler
 	public void login(PlayerJoinEvent event) {
 		// Adds dust around player
-		BukkitRunnable br = new BukkitRunnable() {
+		/*BukkitRunnable br = new BukkitRunnable() {
 
 			@Override
 			public void run() {
@@ -108,7 +108,7 @@ public final class Events implements Listener {
 		event.getPlayer().setAllowFlight(true);
 		CBScoreboard cbs = new CBScoreboard();
 		cbsMap.put(event.getPlayer().getUniqueId(), cbs);
-		cbs.setup(event, invincible, sidebarMap, sidebarObjective, kills, killsNumber, killStreak, killStreakNumber);
+		cbs.setup(event, invincible, sidebarMap, sidebarObjective, kills, killsNumber, killStreak, killStreakNumber);*/
 	}
 
 	@EventHandler

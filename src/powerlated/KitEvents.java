@@ -13,20 +13,23 @@ import org.bukkit.entity.Damageable;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Fireball;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.ThrownPotion;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.PotionSplashEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.potion.Potion;
 import org.bukkit.scheduler.BukkitScheduler;
 import org.bukkit.Bukkit;
 
 public class KitEvents {
 	public static Plugin cb;
-
+	static BukkitScheduler scheduler = Bukkit.getServer().getScheduler();
 	static class Pyrotechnic implements Listener {
 		private HashSet<Player> noFireball = new HashSet<Player>();
 
@@ -49,7 +52,7 @@ public class KitEvents {
 						fb.setVelocity(player.getEyeLocation().getDirection().multiply(2.5));
 					}
 				}
-				BukkitScheduler scheduler = Bukkit.getServer().getScheduler();
+				
 				noFireball.add(player);
 				scheduler.scheduleSyncDelayedTask(cb, new Runnable() {
 					@Override
@@ -65,6 +68,9 @@ public class KitEvents {
 	static class Orc implements Listener {
 		@EventHandler
 		public void healthStealer(EntityDamageByEntityEvent event) {
+			if (KitHandler.kitMap.get(event.getDamager().getUniqueId()) == null) {
+				return;
+			}
 			if (KitHandler.kitMap.get(event.getDamager().getUniqueId()).equals(Kit.ORC)) {
 				Bukkit.broadcastMessage(KitHandler.kitMap.get(event.getDamager().getUniqueId()).toString());
 				Bukkit.broadcastMessage("Orc damaged something.");
@@ -82,6 +88,25 @@ public class KitEvents {
 						damager.setHealth(damage + damager.getHealth());
 						Bukkit.broadcastMessage("Healed by" + damage);
 					}
+				}
+			}
+		}
+	}
+	
+	static class Ghost implements Listener {
+		@EventHandler
+		public void respawnPotion(PotionSplashEvent event) {
+			if (event.getPotion().getShooter() instanceof Player) {
+				Player p = (Player) event.getPotion().getShooter();
+				ThrownPotion po = event.getPotion();
+				if (KitHandler.kitMap.get(p.getUniqueId()).equals(Kit.GHOST)) {
+					scheduler.scheduleSyncDelayedTask(cb, new Runnable() {
+						@Override
+						public void run() {
+							ItemStack poItem = po.getItem();
+							p.getInventory().addItem(poItem);
+						}
+					}, 40L);
 				}
 			}
 		}

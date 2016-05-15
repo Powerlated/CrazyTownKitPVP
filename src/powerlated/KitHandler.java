@@ -109,7 +109,6 @@ public final class KitHandler {
 	public static void setKit(Player p, Kit kit) {
 		kitMap.remove(p.getUniqueId());
 		kitMap.put(p.getUniqueId(), kit);
-		Bukkit.broadcastMessage(p.getUniqueId().toString());
 		p.addPotionEffect(new PotionEffect(
 				PotionEffectType.SATURATION, 1000000, 1));
 	}
@@ -158,7 +157,14 @@ public final class KitHandler {
 		}
 
 		private static void ghost(Player player) {
-
+			player.sendMessage(ChatColor.GRAY + "Equipped Ghost");
+			setKit(player, Kit.ORC);
+			clearInventory(player);
+			KitHandler.removeEffects(player);
+			PlayerInventory pi = player.getInventory();
+			pi.setChestplate(new ItemStack(Material.IRON_CHESTPLATE));
+			pi.setLeggings(new ItemStack(Material.IRON_LEGGINGS));
+			
 		}
 
 		private static void thornMan(Player player) {
