@@ -140,11 +140,8 @@ public final class KitHandler {
 			is[1].setItemMeta(lam);
 			player.getInventory().addItem(is[0]);
 			player.getInventory().setChestplate(is[1]);
+			addEffects(player);
 			
-			player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP,
-					1000000, 2));
-			player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED,
-					1000000, 2));
 
 		}
 
@@ -162,8 +159,12 @@ public final class KitHandler {
 			clearInventory(player);
 			KitHandler.removeEffects(player);
 			PlayerInventory pi = player.getInventory();
+			pi.setHelmet(new ItemStack(Material.SKULL, 1, (short) 1));
 			pi.setChestplate(new ItemStack(Material.IRON_CHESTPLATE));
 			pi.setLeggings(new ItemStack(Material.IRON_LEGGINGS));
+			addEffects(player);
+			player.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY,
+					1000000, 2));
 			
 		}
 
@@ -190,6 +191,7 @@ public final class KitHandler {
 			swordIm.spigot().setUnbreakable(true);
 			pi.addItem(sword);
 			sword.setItemMeta(swordIm);
+			addEffects(player);
 		}
 
 		private static void theKing(Player player) {
@@ -202,6 +204,13 @@ public final class KitHandler {
 
 		private static void ninja(Player player) {
 
+		}
+		
+		private static void addEffects(Player player) {
+			player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP,
+					1000000, 2));
+			player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED,
+					1000000, 2));
 		}
 	}
 
