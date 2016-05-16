@@ -62,6 +62,7 @@ public final class CrazyBucket extends JavaPlugin {
 				new KitEvents.Ghost(), this);
 		Events.plugin = this;
 		KitEvents.cb = this;
+		KitHandler.cb = this;
 	}
 
 	@Override

@@ -2,7 +2,9 @@
 package powerlated;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
@@ -11,20 +13,28 @@ import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.ThrownPotion;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
+import org.bukkit.event.entity.PotionSplashEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
+import org.bukkit.inventory.meta.PotionMeta;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.potion.PotionType;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 public final class KitHandler {
 
 	public static HashMap<UUID, Kit> kitMap = new HashMap<UUID, Kit>();
-
+	public static HashMap<UUID, BukkitTask> ghostMap = new HashMap<UUID, BukkitTask>();
+	static JavaPlugin cb;
 	@EventHandler(priority = EventPriority.MONITOR)
 	// Pyromaniac blaze rod
 	public final static Kit toEnum(String kit) {
@@ -104,21 +114,26 @@ public final class KitHandler {
 	//Remove a kit from a player
 	public static void removeKit(Player p) {
 		kitMap.remove(p.getUniqueId());
+		removeEffects(p);
+		if (ghostMap.get(p.getUniqueId()) != null) {
+			ghostMap.get(p.getUniqueId()).cancel();
+			ghostMap.remove(p.getUniqueId());
+		}
 	}
 
 	public static void setKit(Player p, Kit kit) {
-		kitMap.remove(p.getUniqueId());
+		removeKit(p);
 		kitMap.put(p.getUniqueId(), kit);
-		p.addPotionEffect(new PotionEffect(
-				PotionEffectType.SATURATION, 1000000, 1));
+		
 	}
-
+	
+	public static void clearInventory(Player player) {
+		PlayerInventory i = player.getInventory();
+		i.setArmorContents(new ItemStack[i.getArmorContents().length]);
+		i.clear();
+	}
 	static class Give {
-		private static void clearInventory(Player player) {
-			PlayerInventory i = player.getInventory();
-			i.setArmorContents(new ItemStack[i.getArmorContents().length]);
-			i.clear();
-		}
+		
 
 		private static void pyromaniac(Player player) {
 			player.sendMessage(ChatColor.GRAY + "Equipped Pyromaniac");
@@ -142,7 +157,6 @@ public final class KitHandler {
 			player.getInventory().setChestplate(is[1]);
 			addEffects(player);
 			
-
 		}
 
 		private static void huntsman(Player player) {
@@ -165,8 +179,24 @@ public final class KitHandler {
 			addEffects(player);
 			player.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY,
 					1000000, 2));
-			
-		}
+			BukkitTask br = new BukkitRunnable() {
+		        
+	            @Override
+	            public void run() {
+	            	ItemStack ps = new ItemStack(Material.SPLASH_POTION);
+	            	PotionMeta pm = (PotionMeta) ps.getItemMeta();
+	            	pm.addCustomEffect(new PotionEffect(PotionEffectType.HARM, 0, 0), true);
+	            	pm.setDisplayName(ChatColor.AQUA + "Splash Potion of Battle");
+	            	ps.setItemMeta(pm);
+	            	PlayerInventory pi = player.getInventory();
+	            	if (!pi.contains(ps)) {
+	            		pi.addItem(ps);
+	            	}
+	            }
+	            
+	        }.runTaskTimer(cb, 0, 10);
+	        ghostMap.put(player.getUniqueId(), br);
+	    }
 
 		private static void thornMan(Player player) {
 
@@ -211,7 +241,10 @@ public final class KitHandler {
 					1000000, 2));
 			player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED,
 					1000000, 2));
+			player.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION,
+					1000000, 0));
 		}
+		
 	}
 
 }

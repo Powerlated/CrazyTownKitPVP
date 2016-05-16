@@ -73,42 +73,16 @@ public class KitEvents {
 			}
 			if (KitHandler.kitMap.get(event.getDamager().getUniqueId()).equals(Kit.ORC)) {
 				Bukkit.broadcastMessage(KitHandler.kitMap.get(event.getDamager().getUniqueId()).toString());
-				Bukkit.broadcastMessage("Orc damaged something.");
-
-				if (event.getEntity() instanceof Player) {
-
-				} else {
-					Bukkit.broadcastMessage("The entity that an Orc has damaged is not a player.");
-				}
 				if (event.getDamager() instanceof Player) {
 					Damageable damager = (Damageable) event.getDamager();
 					double damage = event.getDamage();
-					Random r = new Random();
-					if (r.nextInt(1) < 0.5) {
-						damager.setHealth(damage + damager.getHealth());
-						Bukkit.broadcastMessage("Healed by" + damage);
-					}
+					damager.setHealth((damage / 2) + damager.getHealth());
 				}
 			}
 		}
 	}
 	
 	static class Ghost implements Listener {
-		@EventHandler
-		public void respawnPotion(PotionSplashEvent event) {
-			if (event.getPotion().getShooter() instanceof Player) {
-				Player p = (Player) event.getPotion().getShooter();
-				ThrownPotion po = event.getPotion();
-				if (KitHandler.kitMap.get(p.getUniqueId()).equals(Kit.GHOST)) {
-					scheduler.scheduleSyncDelayedTask(cb, new Runnable() {
-						@Override
-						public void run() {
-							ItemStack poItem = po.getItem();
-							p.getInventory().addItem(poItem);
-						}
-					}, 40L);
-				}
-			}
-		}
+		
 	}
 }

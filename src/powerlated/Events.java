@@ -31,6 +31,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -88,27 +89,23 @@ public final class Events implements Listener {
 	@EventHandler
 	public void login(PlayerJoinEvent event) {
 		// Adds dust around player
-		/*BukkitRunnable br = new BukkitRunnable() {
-
-			@Override
-			public void run() {
-				List<Location> l = Util.sphere(event.getPlayer().getLocation(), 5, 5, false, true, 0);
-				for (Location loc : l) {
-					Random rand = new Random(); 
-					double x = ThreadLocalRandom.current().nextDouble(-0.75, 0.75);
-					double y = ThreadLocalRandom.current().nextDouble(-0.75, 0.75);
-					double z = ThreadLocalRandom.current().nextDouble(-0.75, 0.75);
-					loc.add(0.5 + x, 0.5 + y, 0.5 + z);
-					event.getPlayer().playEffect(loc, Effect.COLOURED_DUST, null);
-				}
-			}
-
-		};
-		br.runTaskTimer(cb, 0, 5);
-		event.getPlayer().setAllowFlight(true);
+		/*
+		 * BukkitRunnable br = new BukkitRunnable() {
+		 * 
+		 * @Override public void run() { List<Location> l =
+		 * Util.sphere(event.getPlayer().getLocation(), 5, 5, false, true, 0);
+		 * for (Location loc : l) { Random rand = new Random(); double x =
+		 * ThreadLocalRandom.current().nextDouble(-0.75, 0.75); double y =
+		 * ThreadLocalRandom.current().nextDouble(-0.75, 0.75); double z =
+		 * ThreadLocalRandom.current().nextDouble(-0.75, 0.75); loc.add(0.5 + x,
+		 * 0.5 + y, 0.5 + z); event.getPlayer().playEffect(loc,
+		 * Effect.COLOURED_DUST, null); } }
+		 * 
+		 * }; br.runTaskTimer(cb, 0, 5); event.getPlayer().setAllowFlight(true);
+		 */
 		CBScoreboard cbs = new CBScoreboard();
 		cbsMap.put(event.getPlayer().getUniqueId(), cbs);
-		cbs.setup(event, invincible, sidebarMap, sidebarObjective, kills, killsNumber, killStreak, killStreakNumber);*/
+		cbs.setup(event, invincible, sidebarMap, sidebarObjective, kills, killsNumber, killStreak, killStreakNumber);
 	}
 
 	@EventHandler
@@ -121,14 +118,7 @@ public final class Events implements Listener {
 	}
 
 	// Scoreboard
-	@EventHandler
-	public void onDeath(EntityDeathEvent event) {
-		if (event.getEntity().getKiller() instanceof Player && event.getEntity() instanceof Player) {
-			Player p = (Player) event.getEntity().getKiller();
-			CBScoreboard cbs = cbsMap.get(p.getUniqueId());
-			cbs.addKills(sidebarObjective);
-		}
-	}
+
 
 	@EventHandler
 	public void kitSignPlace(SignChangeEvent event) {
@@ -227,19 +217,16 @@ public final class Events implements Listener {
 
 	@EventHandler
 	public void onPlayerMove(PlayerMoveEvent event) {
-		// Optimizer
-		if (v != null) {
-			if (event.getPlayer().getLocation().toVector().getX() == v.getX()) {
-				if (event.getPlayer().getLocation().toVector().getY() == v.getY()) {
-					if (event.getPlayer().getLocation().toVector().getZ() == v.getZ()) {
-						return;
-					}
-				}
-			}
-		}
-		v = event.getPlayer().getLocation().toVector().toLocation(event.getPlayer().getWorld());
-
 		/*
+		 * if (v != null) { if
+		 * (event.getPlayer().getLocation().toVector().getX() == v.getX()) { if
+		 * (event.getPlayer().getLocation().toVector().getY() == v.getY()) { if
+		 * (event.getPlayer().getLocation().toVector().getZ() == v.getZ()) {
+		 * return; } } } } v =
+		 * event.getPlayer().getLocation().toVector().toLocation(event.getPlayer
+		 * ().getWorld());
+		 * 
+		 * 
 		 * if (event.getPlayer().isFlying()) {
 		 * event.getPlayer().playSound(event.getPlayer().getLocation(),
 		 * Sound.GHAST_FIREBALL, 5, 1);
@@ -270,29 +257,34 @@ public final class Events implements Listener {
 	@EventHandler
 	public void onDamage(EntityDamageEvent event) {
 		if (event.getEntity() instanceof Player) {
-			if (invincible.contains(event.getEntity().getUniqueId())) {
-				event.setCancelled(true);
-			}
 			Player p = (Player) event.getEntity();
-			if (p.getWorld().getName().equalsIgnoreCase("world") && (p.getHealth() - event.getDamage()) < 0) {
+			if (p.getWorld().getName().equalsIgnoreCase("world") && (p.getHealth() - event.getDamage()) < 1) {
+				Util.tpDeath(p);
 				event.setCancelled(true);
-				p.setHealth(20);
-				p.setFoodLevel(20);
-				p.getInventory().clear();
-				p.getInventory().setArmorContents(new ItemStack[] { new ItemStack(Material.AIR),
-						new ItemStack(Material.AIR), new ItemStack(Material.AIR), new ItemStack(Material.AIR) });
-				p.teleport(new Location(Bukkit.getWorld("world"), -689.5, 20, 325.5));
-				return;
+				
 			}
+			
 		}
-		
+
+	}
+	@EventHandler
+	public void onDeath(PlayerDeathEvent event) {
+		if (event.getEntity().getKiller() instanceof Player) {
+			Player p = (Player) event.getEntity().getKiller();
+			CBScoreboard cbs = cbsMap.get(p.getUniqueId());
+			cbs.addKills(sidebarObjective);
+			DeathMessages.killMessage(event.getEntity().getKiller(), event.getEntity());
+		} else {
+			DeathMessages.message(event.getEntity());
+		}
 	}
 
 	public WrappedDataWatcher getDefaultWatcher(World world, EntityType type) {
 		Entity entity = world.spawnEntity(new Location(world, 0, 256, 0), type);
 		WrappedDataWatcher watcher = WrappedDataWatcher.getEntityWatcher(entity).deepClone();
-
 		entity.remove();
 		return watcher;
 	}
+	
+	
 }
