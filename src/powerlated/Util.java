@@ -101,18 +101,4 @@ public class Util {
 			}
 		}
 	}
-
-	public static void tpDeath(Player p) {
-		p.setHealth(20);
-		p.setFoodLevel(20);
-		p.getInventory().clear();
-		p.getInventory().setArmorContents(new ItemStack[] { new ItemStack(Material.AIR), new ItemStack(Material.AIR),
-				new ItemStack(Material.AIR), new ItemStack(Material.AIR) });
-		p.teleport(new Location(Bukkit.getWorld("world"), -689.5, 20, 325.5));
-		KitHandler.removeKit(p);
-		KitHandler.removeEffects(p);
-		Bukkit.getServer().getPluginManager().callEvent(new PlayerDeathEvent(p, null, 0, null));
-		return;
-
-	}
 }

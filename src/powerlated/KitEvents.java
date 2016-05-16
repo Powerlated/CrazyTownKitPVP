@@ -49,7 +49,7 @@ public class KitEvents {
 						fb.setShooter(player);
 						fb.setIsIncendiary(false);
 						fb.setYield(0);
-						fb.setVelocity(player.getEyeLocation().getDirection().multiply(2.5));
+						fb.setVelocity(player.getEyeLocation().getDirection().multiply(5));
 					}
 				}
 				

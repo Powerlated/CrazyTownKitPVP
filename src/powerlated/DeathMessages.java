@@ -14,10 +14,12 @@ public class DeathMessages implements Listener {
 		Random rand = new Random();
 		int n = 1 + rand.nextInt(1 - 3 + 1);
 		if (n == 1) {
-			Bukkit.broadcastMessage(ChatColor.GREEN + "" + ChatColor.BOLD + k.getName() + ChatColor.GOLD + "has killed" + ChatColor.GREEN + "" + ChatColor.BOLD + d.getName() + ChatColor.GOLD + "!");
+			Bukkit.broadcastMessage(ChatColor.RED + "" + ChatColor.BOLD + k.getName() + ChatColor.GOLD + " has killed " + ChatColor.GREEN + "" + ChatColor.BOLD + d.getName() + ChatColor.GOLD + "!");
 		} else if (n == 2) {
-			Bukkit.broadcastMessage(ChatColor.GREEN + "" + ChatColor.BOLD + k.getName() + ChatColor.GOLD + "just rekt" + ChatColor.GREEN + "" + ChatColor.BOLD + d.getName() + ChatColor.GOLD + "!");
-		}
+			Bukkit.broadcastMessage(ChatColor.RED + "" + ChatColor.BOLD + k.getName() + ChatColor.GOLD + " just rekt " + ChatColor.GREEN + "" + ChatColor.BOLD + d.getName() + ChatColor.GOLD + "!");
+		} else if (n == 3) {
+			Bukkit.broadcastMessage(ChatColor.RED + "" + ChatColor.BOLD + k.getName() + ChatColor.GOLD + " just killed " + ChatColor.GREEN + "" + ChatColor.BOLD + d.getName() + ChatColor.GOLD + "!");
+		} 
 		
 	}
 	
@@ -25,13 +27,15 @@ public class DeathMessages implements Listener {
 		EntityDamageEvent ede = d.getLastDamageCause();
 		DamageCause dc = ede.getCause();
 		if (dc == DamageCause.FALL) {
-			Bukkit.broadcastMessage(ChatColor.GREEN + "" + ChatColor.BOLD + d.getName() + ChatColor.GOLD + "fell to their death!");
+			Bukkit.broadcastMessage(ChatColor.RED + "" + ChatColor.BOLD + d.getName() + ChatColor.GOLD + " fell to their death!");
 		} else if (dc == DamageCause.FIRE) {
-			Bukkit.broadcastMessage(ChatColor.GREEN + "" + ChatColor.BOLD + d.getName() + ChatColor.GOLD + "burned to death!");
+			Bukkit.broadcastMessage(ChatColor.RED + "" + ChatColor.BOLD + d.getName() + ChatColor.GOLD + " burned to death!");
 		} else if (dc == DamageCause.LAVA) {
-			Bukkit.broadcastMessage(ChatColor.GREEN + "" + ChatColor.BOLD + d.getName() + ChatColor.GOLD + "burned to death in lava!");
+			Bukkit.broadcastMessage(ChatColor.RED + "" + ChatColor.BOLD + d.getName() + ChatColor.GOLD + " burned to death in lava!");
 		} else if (dc == DamageCause.DROWNING) {
-			Bukkit.broadcastMessage(ChatColor.GREEN + "" + ChatColor.BOLD + d.getName() + ChatColor.GOLD + "forgot to breathe!");
+			Bukkit.broadcastMessage(ChatColor.RED + "" + ChatColor.BOLD + d.getName() + ChatColor.GOLD + " forgot to breathe!");
+		} else {
+			Bukkit.broadcastMessage(ChatColor.RED + "" + ChatColor.BOLD + d.getName() + ChatColor.GOLD + " took his own life.");
 		}
 	}
 	

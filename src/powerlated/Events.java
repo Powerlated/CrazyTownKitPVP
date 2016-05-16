@@ -259,9 +259,6 @@ public final class Events implements Listener {
 		if (event.getEntity() instanceof Player) {
 			Player p = (Player) event.getEntity();
 			if (p.getWorld().getName().equalsIgnoreCase("world") && (p.getHealth() - event.getDamage()) < 1) {
-				Util.tpDeath(p);
-				event.setCancelled(true);
-				
 			}
 			
 		}
@@ -269,7 +266,7 @@ public final class Events implements Listener {
 	}
 	@EventHandler
 	public void onDeath(PlayerDeathEvent event) {
-		if (event.getEntity().getKiller() instanceof Player) {
+		if ((event.getEntity().getKiller() instanceof Player) && event.getEntity().getKiller() != event.getEntity()) {
 			Player p = (Player) event.getEntity().getKiller();
 			CBScoreboard cbs = cbsMap.get(p.getUniqueId());
 			cbs.addKills(sidebarObjective);
