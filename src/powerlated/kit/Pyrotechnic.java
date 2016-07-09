@@ -21,6 +21,7 @@ import powerlated.CrazyBucket;
 public class Pyrotechnic implements Listener {
 	private HashSet<Player> noFireball = new HashSet<Player>();
 	static BukkitScheduler scheduler = Bukkit.getServer().getScheduler();
+
 	@EventHandler
 	public void shootFireball(PlayerInteractEvent event) {
 		Player player = event.getPlayer();
@@ -37,7 +38,7 @@ public class Pyrotechnic implements Listener {
 					fb.setShooter(player);
 					fb.setIsIncendiary(false);
 					fb.setYield(0);
-					fb.setVelocity(player.getEyeLocation().getDirection().multiply(5));
+					fb.setVelocity(player.getEyeLocation().getDirection().multiply(2.5));
 				}
 			}
 

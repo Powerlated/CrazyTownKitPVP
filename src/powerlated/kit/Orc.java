@@ -10,7 +10,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import powerlated.KitHandler;
 import powerlated.Kits;
 
-public class Orc extends Kit implements Listener {
+public class Orc implements Listener {
 	@EventHandler
 	public void healthStealer(EntityDamageByEntityEvent event) {
 		if (KitHandler.kitMap.get(event.getDamager().getUniqueId()) == null) {
@@ -25,4 +25,5 @@ public class Orc extends Kit implements Listener {
 			}
 		}
 	}
+
 }

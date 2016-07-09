@@ -29,83 +29,84 @@ public final class KitHandler {
 	public static HashMap<UUID, Kits> kitMap = new HashMap<UUID, Kits>();
 	public static HashMap<UUID, BukkitTask> ghostMap = new HashMap<UUID, BukkitTask>();
 	static JavaPlugin cb;
+
 	@EventHandler(priority = EventPriority.MONITOR)
 	// Pyromaniac blaze rod
 	public final static Kits toEnum(String kit) {
 		switch (kit.toLowerCase()) {
-			case "pyromaniac":
-				return Kits.PYROMANIAC;
-			case "huntsman":
-				return Kits.HUNTSMAN;
-			case "robin hood":
-				return Kits.ROBIN_HOOD;
-			case "ghost":
-				return Kits.GHOST;
-			case "thorn man":
-				return Kits.THORN_MAN;
-			case "armored knight":
-				return Kits.ARMORED_KNIGHT;
-			case "orc":
-				return Kits.ORC;
-			case "the king":
-				return Kits.THE_KING;
-			case "knight":
-				return Kits.KNIGHT;
-			case "ninja":
-				return Kits.NINJA;
-			default:
-				return Kits.UNSPECIFIED; 
+		case "pyromaniac":
+			return Kits.PYROMANIAC;
+		case "huntsman":
+			return Kits.HUNTSMAN;
+		case "robin hood":
+			return Kits.ROBIN_HOOD;
+		case "ghost":
+			return Kits.GHOST;
+		case "thorn man":
+			return Kits.THORN_MAN;
+		case "armored knight":
+			return Kits.ARMORED_KNIGHT;
+		case "orc":
+			return Kits.ORC;
+		case "the king":
+			return Kits.THE_KING;
+		case "knight":
+			return Kits.KNIGHT;
+		case "ninja":
+			return Kits.NINJA;
+		default:
+			return Kits.UNSPECIFIED;
 		}
 	}
 
-	public final static void select(Kits kits, Player player,
-			PlayerInteractEvent event) {
+	public final static void select(Kits kits, Player player, PlayerInteractEvent event) {
 		switch (kits) {
-			case PYROMANIAC:
-				Give.pyromaniac(player);
-				return;
-			case HUNTSMAN:
-				Give.huntsman(player);
-				return;
-			case ROBIN_HOOD:
-				Give.robinHood(player);
-				return;
-			case GHOST:
-				Give.ghost(player);
-				return;
-			case THORN_MAN:
-				Give.thornMan(player);
-				return;
-			case ARMORED_KNIGHT:
-				Give.armouredKnight(player);
-				return;
-			case ORC:
-				Give.orc(player);
-				return;
-			case THE_KING:
-				Give.theKing(player);
-				return;
-			case KNIGHT:
-				Give.knight(player);
-				return;
-			case NINJA:
-				Give.ninja(player);
-				return;
-			default:
-				player.getWorld().setGameRuleValue("doTileDrops", "false");
-				event.getClickedBlock().breakNaturally();
-				player.getWorld().setGameRuleValue("doTileDrops", "true");
-				player.sendMessage(ChatColor.RED
-						+ "Error: That kit does not exist.");
+		case PYROMANIAC:
+			Give.pyromaniac(player);
+			return;
+		case HUNTSMAN:
+			Give.huntsman(player);
+			return;
+		case ROBIN_HOOD:
+			Give.robinHood(player);
+			return;
+		case GHOST:
+			Give.ghost(player);
+			return;
+		case THORN_MAN:
+			Give.thornMan(player);
+			return;
+		case ARMORED_KNIGHT:
+			Give.armouredKnight(player);
+			return;
+		case ORC:
+			Give.orc(player);
+			return;
+		case THE_KING:
+			Give.theKing(player);
+			return;
+		case KNIGHT:
+			Give.knight(player);
+			return;
+		case NINJA:
+			Give.ninja(player);
+			return;
+		default:
+			player.getWorld().setGameRuleValue("doTileDrops", "false");
+			event.getClickedBlock().breakNaturally();
+			player.getWorld().setGameRuleValue("doTileDrops", "true");
+			player.sendMessage(ChatColor.RED + "Error: That kit does not exist.");
 		}
 
 	}
-	//Removes all potion effects from a player
+
+	// Removes all potion effects from a player
 	public static void removeEffects(Player player) {
 		for (PotionEffect effect : player.getActivePotionEffects())
 			player.removePotionEffect(effect.getType());
 	}
-	//Remove a kit from a player
+
+	// Remove a kit from a player
 	public static void removeKit(Player p) {
 		kitMap.remove(p.getUniqueId());
 		removeEffects(p);
@@ -118,16 +119,16 @@ public final class KitHandler {
 	public static void setKit(Player p, Kits kits) {
 		removeKit(p);
 		kitMap.put(p.getUniqueId(), kits);
-		
+
 	}
-	
+
 	public static void clearInventory(Player player) {
 		PlayerInventory i = player.getInventory();
 		i.setArmorContents(new ItemStack[i.getArmorContents().length]);
 		i.clear();
 	}
+
 	static class Give {
-		
 
 		private static void pyromaniac(Player player) {
 			player.sendMessage(ChatColor.GRAY + "Equipped Pyromaniac");
@@ -137,20 +138,18 @@ public final class KitHandler {
 			Map<Enchantment, Integer> enchantments = new HashMap<Enchantment, Integer>();
 			enchantments.put(Enchantment.FIRE_ASPECT, 2);
 			enchantments.put(Enchantment.DAMAGE_ALL, 2);
-			ItemStack[] is = { new ItemStack(Material.BLAZE_ROD, 1),
-					new ItemStack(Material.LEATHER_CHESTPLATE, 1) };
+			ItemStack[] is = { new ItemStack(Material.BLAZE_ROD, 1), new ItemStack(Material.LEATHER_CHESTPLATE, 1) };
 			is[0].addUnsafeEnchantments(enchantments);
 			ItemMeta im = (ItemMeta) is[0].getItemMeta();
 			LeatherArmorMeta lam = (LeatherArmorMeta) is[1].getItemMeta();
-			im.setDisplayName(ChatColor.YELLOW + "" + ChatColor.BOLD
-					+ "THE EPIC STICK OF EPICNESS");
+			im.setDisplayName(ChatColor.YELLOW + "" + ChatColor.BOLD + "THE EPIC STICK OF EPICNESS");
 			lam.setColor(Color.RED);
 			is[0].setItemMeta(im);
 			is[1].setItemMeta(lam);
 			player.getInventory().addItem(is[0]);
 			player.getInventory().setChestplate(is[1]);
 			addEffects(player);
-			
+
 		}
 
 		private static void huntsman(Player player) {
@@ -191,13 +190,14 @@ public final class KitHandler {
 			pi.addItem(bow, arrow);
 			addEffects(player);
 		}
-		
+
 		private static void green(ItemStack is) {
 			ItemMeta im = is.getItemMeta();
 			LeatherArmorMeta lam = (LeatherArmorMeta) im;
 			lam.setColor(Color.GREEN);
 			is.setItemMeta(lam);
 		}
+
 		private static void ghost(Player player) {
 			player.sendMessage(ChatColor.GRAY + "Equipped Ghost");
 			setKit(player, Kits.ORC);
@@ -207,28 +207,27 @@ public final class KitHandler {
 			pi.setHelmet(new ItemStack(Material.SKULL, 1, (short) 1));
 			pi.setChestplate(new ItemStack(Material.IRON_CHESTPLATE));
 			pi.setLeggings(new ItemStack(Material.IRON_LEGGINGS));
-			
-			player.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY,
-					1000000, 2));
+
+			player.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 1000000, 2));
 			BukkitTask br = new BukkitRunnable() {
-		        
-	            @Override
-	            public void run() {
-	            	ItemStack ps = new ItemStack(Material.SPLASH_POTION);
-	            	PotionMeta pm = (PotionMeta) ps.getItemMeta();
-	            	pm.addCustomEffect(new PotionEffect(PotionEffectType.HARM, 0, 0), true);
-	            	pm.setDisplayName(ChatColor.AQUA + "Splash Potion of Battle");
-	            	ps.setItemMeta(pm);
-	            	PlayerInventory pi = player.getInventory();
-	            	if (!pi.contains(ps)) {
-	            		pi.addItem(ps);
-	            	}
-	            }
-	            
-	        }.runTaskTimer(cb, 0, 10);
-	        ghostMap.put(player.getUniqueId(), br);
-	        addEffects(player);
-	    }
+
+				@Override
+				public void run() {
+					ItemStack ps = new ItemStack(Material.SPLASH_POTION);
+					PotionMeta pm = (PotionMeta) ps.getItemMeta();
+					pm.addCustomEffect(new PotionEffect(PotionEffectType.HARM, 0, 0), true);
+					pm.setDisplayName(ChatColor.AQUA + "Splash Potion of Battle");
+					ps.setItemMeta(pm);
+					PlayerInventory pi = player.getInventory();
+					if (!pi.contains(ps)) {
+						pi.addItem(ps);
+					}
+				}
+
+			}.runTaskTimer(cb, 0, 10);
+			ghostMap.put(player.getUniqueId(), br);
+			addEffects(player);
+		}
 
 		private static void thornMan(Player player) {
 			addEffects(player);
@@ -265,16 +264,13 @@ public final class KitHandler {
 		private static void ninja(Player player) {
 			addEffects(player);
 		}
-		
+
 		private static void addEffects(Player player) {
-			player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP,
-					1000000, 2));
-			player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED,
-					1000000, 2));
-			player.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION,
-					1000000, 0));
+			player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 1000000, 2));
+			player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 1000000, 2));
+			player.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 1000000, 0));
 		}
-		
+
 		private static void unbreakable(ItemStack item) {
 			ItemMeta im = item.getItemMeta();
 			im.spigot().setUnbreakable(true);

@@ -20,23 +20,17 @@ public final class CBScoreboard {
 	Score killsNumber;
 	int killsNumberInt = 1;
 
-	public void setup(PlayerJoinEvent event, Set<UUID> invincible,
-			Map<UUID, Scoreboard> sidebarMap, Objective sidebarObjective,
-			Score kills, Score killsNumber, Score killStreak,
-			Score killStreakNumber) {
+	public void setup(PlayerJoinEvent event, Set<UUID> invincible, Map<UUID, Scoreboard> sidebarMap,
+			Objective sidebarObjective, Score kills, Score killsNumber, Score killStreak, Score killStreakNumber) {
 		Scoreboard sidebar = Bukkit.getScoreboardManager().getNewScoreboard();
 		sidebarMap.put(event.getPlayer().getUniqueId(), sidebar);
-		sidebarObjective = sidebar.registerNewObjective("sidebarObjective",
-				"dummy");
+		sidebarObjective = sidebar.registerNewObjective("sidebarObjective", "dummy");
 		sidebarObjective.setDisplaySlot(DisplaySlot.SIDEBAR);
-		sidebarObjective.setDisplayName(ChatColor.GOLD + "" + ChatColor.BOLD
-				+ "CRAZY BUCKET");
-		kills = sidebarObjective.getScore(ChatColor.RED + "" + ChatColor.BOLD
-				+ "Kills:");
-		killsNumber = sidebarObjective.getScore(ChatColor.AQUA + ""
-				+ ChatColor.BOLD + Integer.toString(0));
+		sidebarObjective.setDisplayName(ChatColor.GOLD + "" + ChatColor.BOLD + "CRAZY BUCKET");
+		kills = sidebarObjective.getScore(ChatColor.RED + "" + ChatColor.BOLD + "Kills:");
+		killsNumber = sidebarObjective.getScore(ChatColor.AQUA + "" + ChatColor.BOLD + Integer.toString(0));
 		/*
-		 * killStreak = sidebarObjective.getScore(ChatColor.RED + "" + 
+		 * killStreak = sidebarObjective.getScore(ChatColor.RED + "" +
 		 * ChatColor.BOLD + "Killstreak:"); killStreakNumber =
 		 * sidebarObjective.getScore(ChatColor.AQUA + "" + ChatColor.BOLD +
 		 * Integer.toString(0) + " ");
@@ -55,15 +49,11 @@ public final class CBScoreboard {
 
 	public void addKills(Objective sidebarObjective) {
 		sidebar.getObjective("sidebarObjective").unregister();
-		sidebarObjective = sidebar.registerNewObjective("sidebarObjective",
-				"dummy");
+		sidebarObjective = sidebar.registerNewObjective("sidebarObjective", "dummy");
 		sidebarObjective.setDisplaySlot(DisplaySlot.SIDEBAR);
-		sidebarObjective.setDisplayName(ChatColor.GOLD + "" + ChatColor.BOLD
-				+ "CRAZY BUCKET");
-		kills = sidebarObjective.getScore(ChatColor.RED + "" + ChatColor.BOLD
-				+ "Kills:");
-		killsNumber = sidebarObjective.getScore(ChatColor.AQUA + ""
-				+ ChatColor.BOLD + killsNumberInt);
+		sidebarObjective.setDisplayName(ChatColor.GOLD + "" + ChatColor.BOLD + "CRAZY BUCKET");
+		kills = sidebarObjective.getScore(ChatColor.RED + "" + ChatColor.BOLD + "Kills:");
+		killsNumber = sidebarObjective.getScore(ChatColor.AQUA + "" + ChatColor.BOLD + killsNumberInt);
 		/*
 		 * killStreak = sidebarObjective.getScore(ChatColor.RED + "" +
 		 * ChatColor.BOLD + "Killstreak:"); killStreakNumber =
@@ -79,15 +69,11 @@ public final class CBScoreboard {
 
 	public void setKills(Objective sidebarObjective, int set) {
 		sidebar.getObjective("sidebarObjective").unregister();
-		sidebarObjective = sidebar.registerNewObjective("sidebarObjective",
-				"dummy");
+		sidebarObjective = sidebar.registerNewObjective("sidebarObjective", "dummy");
 		sidebarObjective.setDisplaySlot(DisplaySlot.SIDEBAR);
-		sidebarObjective.setDisplayName(ChatColor.GOLD + "" + ChatColor.BOLD
-				+ "CRAZY BUCKET");
-		kills = sidebarObjective.getScore(ChatColor.RED + "" + ChatColor.BOLD
-				+ "Kills:");
-		killsNumber = sidebarObjective.getScore(ChatColor.AQUA + ""
-				+ ChatColor.BOLD + killsNumberInt);
+		sidebarObjective.setDisplayName(ChatColor.GOLD + "" + ChatColor.BOLD + "CRAZY BUCKET");
+		kills = sidebarObjective.getScore(ChatColor.RED + "" + ChatColor.BOLD + "Kills:");
+		killsNumber = sidebarObjective.getScore(ChatColor.AQUA + "" + ChatColor.BOLD + killsNumberInt);
 		/*
 		 * killStreak = sidebarObjective.getScore(ChatColor.RED + "" +
 		 * ChatColor.BOLD + "Killstreak:"); killStreakNumber =

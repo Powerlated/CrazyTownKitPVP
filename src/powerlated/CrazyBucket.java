@@ -26,8 +26,7 @@ import powerlated.kit.*;
 
 public final class CrazyBucket extends JavaPlugin {
 	private PluginManager pm = getServer().getPluginManager();
-	protected Set<UUID> invincible = Collections
-			.synchronizedSet(new HashSet<UUID>());
+	protected Set<UUID> invincible = Collections.synchronizedSet(new HashSet<UUID>());
 	protected Map<UUID, Scoreboard> sidebarMap = new HashMap<UUID, Scoreboard>();
 	protected Map<UUID, CBScoreboard> cbsMap = new HashMap<UUID, CBScoreboard>();
 	protected Objective sidebarObjective;
@@ -37,14 +36,13 @@ public final class CrazyBucket extends JavaPlugin {
 	protected Score killStreakNumber;
 	protected int killsNumberInt;
 	protected int killStreakNumberInt;
-	Events events = new Events(invincible, sidebarMap, cbsMap,
-			sidebarObjective, kills, killStreak, killsNumber, killStreakNumber,
-			killsNumberInt, killStreakNumberInt, this);
+	Events events = new Events(invincible, sidebarMap, cbsMap, sidebarObjective, kills, killStreak, killsNumber,
+			killStreakNumber, killsNumberInt, killStreakNumberInt, this);
 	public static CrazyBucket cb;
+
 	@Override
 	public void onEnable() {
-		events.ghastWatcher = events.getDefaultWatcher(getServer().getWorlds().get(0),
-				EntityType.GHAST);
+		events.ghastWatcher = events.getDefaultWatcher(getServer().getWorlds().get(0), EntityType.GHAST);
 
 		for (WrappedWatchableObject object : events.ghastWatcher)
 			System.out.println(object);
@@ -53,14 +51,10 @@ public final class CrazyBucket extends JavaPlugin {
 		}
 
 		pm.registerEvents(events, this);
-		pm.registerEvents(
-				new Pyrotechnic(), this);
-		pm.registerEvents(
-				new Orc(), this);
-		pm.registerEvents(
-				new RobinHood(), this);
-		pm.registerEvents(
-				new RobinHood(), this);
+		pm.registerEvents(new Pyrotechnic(), this);
+		pm.registerEvents(new Orc(), this);
+		pm.registerEvents(new RobinHood(), this);
+		pm.registerEvents(new RobinHood(), this);
 		cb = this;
 	}
 
@@ -73,8 +67,8 @@ public final class CrazyBucket extends JavaPlugin {
 		kills = null;
 		killStreak = null;
 		killsNumber = null;
-		Bukkit.broadcastMessage(ChatColor.RED
-				+ "Please note that CrazyBucketKitPVP will break if players do not relog.");
+		Bukkit.broadcastMessage(
+				ChatColor.RED + "Please note that CrazyBucketKitPVP will break if players do not relog.");
 		HandlerList.unregisterAll((Plugin) this);
 	}
 

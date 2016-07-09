@@ -102,7 +102,6 @@ public final class Events implements Listener {
 
 	// Scoreboard
 
-
 	@EventHandler
 	public void kitSignPlace(SignChangeEvent event) {
 		if (event.getLine(0).equalsIgnoreCase("-Kit-")) {
@@ -243,10 +242,11 @@ public final class Events implements Listener {
 			Player p = (Player) event.getEntity();
 			if (p.getWorld().getName().equalsIgnoreCase("world") && (p.getHealth() - event.getDamage()) < 1) {
 			}
-			
+
 		}
 
 	}
+
 	@EventHandler
 	public void onDeath(PlayerDeathEvent event) {
 		if ((event.getEntity().getKiller() instanceof Player) && event.getEntity().getKiller() != event.getEntity()) {
@@ -265,6 +265,5 @@ public final class Events implements Listener {
 		entity.remove();
 		return watcher;
 	}
-	
-	
+
 }
