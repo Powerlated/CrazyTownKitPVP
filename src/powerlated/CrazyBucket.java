@@ -14,6 +14,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Score;
@@ -21,8 +22,10 @@ import org.bukkit.scoreboard.Scoreboard;
 
 import com.comphenix.protocol.wrappers.WrappedWatchableObject;
 
-public final class CrazyBucket extends JavaPlugin {
+import powerlated.kit.*;
 
+public final class CrazyBucket extends JavaPlugin {
+	private PluginManager pm = getServer().getPluginManager();
 	protected Set<UUID> invincible = Collections
 			.synchronizedSet(new HashSet<UUID>());
 	protected Map<UUID, Scoreboard> sidebarMap = new HashMap<UUID, Scoreboard>();
@@ -37,7 +40,7 @@ public final class CrazyBucket extends JavaPlugin {
 	Events events = new Events(invincible, sidebarMap, cbsMap,
 			sidebarObjective, kills, killStreak, killsNumber, killStreakNumber,
 			killsNumberInt, killStreakNumberInt, this);
-
+	public static CrazyBucket cb;
 	@Override
 	public void onEnable() {
 		events.ghastWatcher = events.getDefaultWatcher(getServer().getWorlds().get(0),
@@ -49,16 +52,16 @@ public final class CrazyBucket extends JavaPlugin {
 			p.setAllowFlight(true);
 		}
 
-		getServer().getPluginManager().registerEvents(events, this);
-		getServer().getPluginManager().registerEvents(
-				new KitEvents.Pyrotechnic(), this);
-		getServer().getPluginManager().registerEvents(
-				new KitEvents.Orc(), this);
-		getServer().getPluginManager().registerEvents(
-				new KitEvents.RobinHood(), this);
-		Events.plugin = this;
-		KitEvents.cb = this;
-		KitHandler.cb = this;
+		pm.registerEvents(events, this);
+		pm.registerEvents(
+				new Pyrotechnic(), this);
+		pm.registerEvents(
+				new Orc(), this);
+		pm.registerEvents(
+				new RobinHood(), this);
+		pm.registerEvents(
+				new RobinHood(), this);
+		cb = this;
 	}
 
 	@Override

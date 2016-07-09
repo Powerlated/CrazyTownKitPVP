@@ -54,7 +54,7 @@ public final class KitHandler {
 			case "ninja":
 				return Kit.NINJA;
 			default:
-				return null; 
+				return Kit.UNSPECIFIED; 
 		}
 	}
 
@@ -154,7 +154,7 @@ public final class KitHandler {
 		}
 
 		private static void huntsman(Player player) {
-
+			addEffects(player);
 		}
 
 		private static void robinHood(Player player) {
@@ -189,6 +189,7 @@ public final class KitHandler {
 			bow.addEnchantment(Enchantment.ARROW_KNOCKBACK, 2);
 			bow.addEnchantment(Enchantment.ARROW_INFINITE, 1);
 			pi.addItem(bow, arrow);
+			addEffects(player);
 		}
 		
 		private static void green(ItemStack is) {
@@ -206,7 +207,7 @@ public final class KitHandler {
 			pi.setHelmet(new ItemStack(Material.SKULL, 1, (short) 1));
 			pi.setChestplate(new ItemStack(Material.IRON_CHESTPLATE));
 			pi.setLeggings(new ItemStack(Material.IRON_LEGGINGS));
-			addEffects(player);
+			
 			player.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY,
 					1000000, 2));
 			BukkitTask br = new BukkitRunnable() {
@@ -226,14 +227,15 @@ public final class KitHandler {
 	            
 	        }.runTaskTimer(cb, 0, 10);
 	        ghostMap.put(player.getUniqueId(), br);
+	        addEffects(player);
 	    }
 
 		private static void thornMan(Player player) {
-
+			addEffects(player);
 		}
 
 		private static void armouredKnight(Player player) {
-
+			addEffects(player);
 		}
 
 		private static void orc(Player player) {
@@ -261,7 +263,7 @@ public final class KitHandler {
 		}
 
 		private static void ninja(Player player) {
-
+			addEffects(player);
 		}
 		
 		private static void addEffects(Player player) {

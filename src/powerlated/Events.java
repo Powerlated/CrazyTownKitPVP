@@ -97,7 +97,7 @@ public final class Events implements Listener {
 
 	@EventHandler
 	public void logOut(PlayerQuitEvent event) {
-
+		cbsMap.remove(event.getPlayer());
 	}
 
 	// Scoreboard
