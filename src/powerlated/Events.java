@@ -123,7 +123,7 @@ public final class Events implements Listener {
 				String line1 = sign.getLine(0);
 				String line2 = sign.getLine(1);
 				if (line1.equals(ChatColor.DARK_BLUE + "-Kit-")) {
-					Kit k = KitHandler.toEnum(line2);
+					Kits k = KitHandler.toEnum(line2);
 					if (k != null) {
 						KitHandler.select(k, event.getPlayer(), event);
 					}

@@ -26,41 +26,41 @@ import org.bukkit.scheduler.BukkitTask;
 
 public final class KitHandler {
 
-	public static HashMap<UUID, Kit> kitMap = new HashMap<UUID, Kit>();
+	public static HashMap<UUID, Kits> kitMap = new HashMap<UUID, Kits>();
 	public static HashMap<UUID, BukkitTask> ghostMap = new HashMap<UUID, BukkitTask>();
 	static JavaPlugin cb;
 	@EventHandler(priority = EventPriority.MONITOR)
 	// Pyromaniac blaze rod
-	public final static Kit toEnum(String kit) {
+	public final static Kits toEnum(String kit) {
 		switch (kit.toLowerCase()) {
 			case "pyromaniac":
-				return Kit.PYROMANIAC;
+				return Kits.PYROMANIAC;
 			case "huntsman":
-				return Kit.HUNTSMAN;
+				return Kits.HUNTSMAN;
 			case "robin hood":
-				return Kit.ROBIN_HOOD;
+				return Kits.ROBIN_HOOD;
 			case "ghost":
-				return Kit.GHOST;
+				return Kits.GHOST;
 			case "thorn man":
-				return Kit.THORN_MAN;
+				return Kits.THORN_MAN;
 			case "armored knight":
-				return Kit.ARMORED_KNIGHT;
+				return Kits.ARMORED_KNIGHT;
 			case "orc":
-				return Kit.ORC;
+				return Kits.ORC;
 			case "the king":
-				return Kit.THE_KING;
+				return Kits.THE_KING;
 			case "knight":
-				return Kit.KNIGHT;
+				return Kits.KNIGHT;
 			case "ninja":
-				return Kit.NINJA;
+				return Kits.NINJA;
 			default:
-				return Kit.UNSPECIFIED; 
+				return Kits.UNSPECIFIED; 
 		}
 	}
 
-	public final static void select(Kit kit, Player player,
+	public final static void select(Kits kits, Player player,
 			PlayerInteractEvent event) {
-		switch (kit) {
+		switch (kits) {
 			case PYROMANIAC:
 				Give.pyromaniac(player);
 				return;
@@ -115,9 +115,9 @@ public final class KitHandler {
 		}
 	}
 
-	public static void setKit(Player p, Kit kit) {
+	public static void setKit(Player p, Kits kits) {
 		removeKit(p);
-		kitMap.put(p.getUniqueId(), kit);
+		kitMap.put(p.getUniqueId(), kits);
 		
 	}
 	
@@ -131,7 +131,7 @@ public final class KitHandler {
 
 		private static void pyromaniac(Player player) {
 			player.sendMessage(ChatColor.GRAY + "Equipped Pyromaniac");
-			setKit(player, Kit.PYROMANIAC);
+			setKit(player, Kits.PYROMANIAC);
 			clearInventory(player);
 			KitHandler.removeEffects(player);
 			Map<Enchantment, Integer> enchantments = new HashMap<Enchantment, Integer>();
@@ -159,7 +159,7 @@ public final class KitHandler {
 
 		private static void robinHood(Player player) {
 			player.sendMessage(ChatColor.GRAY + "Equipped Robin Hood");
-			setKit(player, Kit.ROBIN_HOOD);
+			setKit(player, Kits.ROBIN_HOOD);
 			clearInventory(player);
 			KitHandler.removeEffects(player);
 			PlayerInventory pi = player.getInventory();
@@ -200,7 +200,7 @@ public final class KitHandler {
 		}
 		private static void ghost(Player player) {
 			player.sendMessage(ChatColor.GRAY + "Equipped Ghost");
-			setKit(player, Kit.ORC);
+			setKit(player, Kits.ORC);
 			clearInventory(player);
 			KitHandler.removeEffects(player);
 			PlayerInventory pi = player.getInventory();
@@ -240,7 +240,7 @@ public final class KitHandler {
 
 		private static void orc(Player player) {
 			player.sendMessage(ChatColor.GRAY + "Equipped Orc");
-			setKit(player, Kit.ORC);
+			setKit(player, Kits.ORC);
 			clearInventory(player);
 			KitHandler.removeEffects(player);
 			PlayerInventory pi = player.getInventory();

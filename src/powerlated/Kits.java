@@ -1,5 +1,5 @@
 package powerlated;
 
-public enum Kit {
+public enum Kits {
 	PYROMANIAC, HUNTSMAN, ROBIN_HOOD, GHOST, THORN_MAN, ARMORED_KNIGHT, ORC, THE_KING, KNIGHT, NINJA, UNSPECIFIED
 }
