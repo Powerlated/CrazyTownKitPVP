@@ -10,7 +10,6 @@ import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.block.Block;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
@@ -19,11 +18,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Score;
 import org.bukkit.scoreboard.Scoreboard;
-import org.bukkit.Material;
 
 import com.comphenix.protocol.wrappers.WrappedWatchableObject;
-
-import powerlated.CBScoreboard;
 
 public final class CrazyBucket extends JavaPlugin {
 
@@ -59,7 +55,7 @@ public final class CrazyBucket extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(
 				new KitEvents.Orc(), this);
 		getServer().getPluginManager().registerEvents(
-				new KitEvents.Ghost(), this);
+				new KitEvents.RobinHood(), this);
 		Events.plugin = this;
 		KitEvents.cb = this;
 		KitHandler.cb = this;

@@ -12,12 +12,12 @@ import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 public class DeathMessages implements Listener {
 	public static void killMessage(Player k, Player d) {
 		Random rand = new Random();
-		int n = 1 + rand.nextInt(1 - 3 + 1);
-		if (n == 1) {
+		int n = rand.nextInt(2);
+		if (n == 0) {
 			Bukkit.broadcastMessage(ChatColor.RED + "" + ChatColor.BOLD + k.getName() + ChatColor.GOLD + " has killed " + ChatColor.GREEN + "" + ChatColor.BOLD + d.getName() + ChatColor.GOLD + "!");
-		} else if (n == 2) {
+		} else if (n == 1) {
 			Bukkit.broadcastMessage(ChatColor.RED + "" + ChatColor.BOLD + k.getName() + ChatColor.GOLD + " just rekt " + ChatColor.GREEN + "" + ChatColor.BOLD + d.getName() + ChatColor.GOLD + "!");
-		} else if (n == 3) {
+		} else if (n == 2) {
 			Bukkit.broadcastMessage(ChatColor.RED + "" + ChatColor.BOLD + k.getName() + ChatColor.GOLD + " just killed " + ChatColor.GREEN + "" + ChatColor.BOLD + d.getName() + ChatColor.GOLD + "!");
 		} 
 		

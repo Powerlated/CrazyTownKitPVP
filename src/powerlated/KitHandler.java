@@ -2,21 +2,16 @@
 package powerlated;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.UUID;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.ThrownPotion;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
-import org.bukkit.event.entity.PotionSplashEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -26,7 +21,6 @@ import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.bukkit.potion.PotionType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
@@ -164,9 +158,45 @@ public final class KitHandler {
 		}
 
 		private static void robinHood(Player player) {
-
+			player.sendMessage(ChatColor.GRAY + "Equipped Robin Hood");
+			setKit(player, Kit.ROBIN_HOOD);
+			clearInventory(player);
+			KitHandler.removeEffects(player);
+			PlayerInventory pi = player.getInventory();
+			ItemStack helmet = new ItemStack(Material.LEATHER_HELMET);
+			ItemStack chestplate = new ItemStack(Material.LEATHER_CHESTPLATE);
+			ItemStack pants = new ItemStack(Material.LEATHER_LEGGINGS);
+			ItemStack boots = new ItemStack(Material.LEATHER_BOOTS);
+			helmet.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2);
+			chestplate.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2);
+			pants.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2);
+			boots.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2);
+			green(helmet);
+			green(chestplate);
+			green(pants);
+			green(boots);
+			pi.setHelmet(helmet);
+			pi.setChestplate(chestplate);
+			pi.setLeggings(pants);
+			pi.setBoots(boots);
+			ItemStack bow = new ItemStack(Material.BOW);
+			ItemStack arrow = new ItemStack(Material.ARROW);
+			unbreakable(bow);
+			ItemMeta bim = bow.getItemMeta();
+			bim.setDisplayName(ChatColor.AQUA + "Epic Bow");
+			bow.setItemMeta(bim);
+			bow.addEnchantment(Enchantment.ARROW_DAMAGE, 2);
+			bow.addEnchantment(Enchantment.ARROW_KNOCKBACK, 2);
+			bow.addEnchantment(Enchantment.ARROW_INFINITE, 1);
+			pi.addItem(bow, arrow);
 		}
-
+		
+		private static void green(ItemStack is) {
+			ItemMeta im = is.getItemMeta();
+			LeatherArmorMeta lam = (LeatherArmorMeta) im;
+			lam.setColor(Color.GREEN);
+			is.setItemMeta(lam);
+		}
 		private static void ghost(Player player) {
 			player.sendMessage(ChatColor.GRAY + "Equipped Ghost");
 			setKit(player, Kit.ORC);
@@ -217,10 +247,8 @@ public final class KitHandler {
 			pi.setLeggings(new ItemStack(Material.CHAINMAIL_LEGGINGS));
 			pi.setBoots(new ItemStack(Material.CHAINMAIL_BOOTS));
 			ItemStack sword = new ItemStack(Material.WOOD_SWORD);
-			ItemMeta swordIm = sword.getItemMeta();
-			swordIm.spigot().setUnbreakable(true);
+			unbreakable(sword);
 			pi.addItem(sword);
-			sword.setItemMeta(swordIm);
 			addEffects(player);
 		}
 
@@ -245,6 +273,11 @@ public final class KitHandler {
 					1000000, 0));
 		}
 		
+		private static void unbreakable(ItemStack item) {
+			ItemMeta im = item.getItemMeta();
+			im.spigot().setUnbreakable(true);
+			item.setItemMeta(im);
+		}
 	}
 
 }
