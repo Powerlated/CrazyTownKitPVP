@@ -1,6 +1,7 @@
 
 package com.powerlated;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -24,12 +25,16 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Score;
 import org.bukkit.scoreboard.Scoreboard;
@@ -44,6 +49,7 @@ public final class Events implements Listener {
 	protected static CrazyBucket plugin;
 	protected Set<UUID> invincible = Collections.synchronizedSet(new HashSet<UUID>());
 	protected CrazyBucket cb;
+	private static HashMap<UUID, Collection<PotionEffect>> effects = new HashMap<UUID, Collection<PotionEffect>>();
 	Runtime r = Runtime.getRuntime();
 
 	public Events() {
@@ -181,6 +187,7 @@ public final class Events implements Listener {
 	}
 
 	Location v;
+	private Runnable task;
 
 	@EventHandler
 	public void onPlayerMove(PlayerMoveEvent event) {
@@ -227,9 +234,7 @@ public final class Events implements Listener {
 			Player p = (Player) event.getEntity();
 			if (p.getWorld().getName().equalsIgnoreCase("world") && (p.getHealth() - event.getDamage()) < 1) {
 			}
-
 		}
-
 	}
 
 	@EventHandler
@@ -241,6 +246,32 @@ public final class Events implements Listener {
 			DeathMessages.killMessage(event.getEntity().getKiller(), event.getEntity());
 		} else {
 			DeathMessages.message(event.getEntity());
+		}
+		effects.put(event.getEntity().getUniqueId(), event.getEntity().getActivePotionEffects());
+		for (PotionEffect effect : event.getEntity().getActivePotionEffects()) {
+			System.out.println(effect);
+		}
+	}
+
+	@EventHandler
+	public void onRespawn(PlayerRespawnEvent event) {
+		new BukkitRunnable() {
+			@Override
+			public void run() {
+				event.getPlayer().addPotionEffects(effects.get(event.getPlayer().getUniqueId()));
+				for (PotionEffect effect : effects.get(event.getPlayer().getUniqueId())) {
+					System.out.println(effect);
+				}
+			}
+		}.runTaskLater(cb, 1);
+	}
+
+	@EventHandler
+	public void onEntityRegainHealth(EntityRegainHealthEvent event) {
+		if (event.getEntity() instanceof Player) {
+			event.setAmount(event.getAmount() * 0.25);
+			Player p = (Player) event.getEntity();
+			p.setFoodLevel(20);
 		}
 	}
 

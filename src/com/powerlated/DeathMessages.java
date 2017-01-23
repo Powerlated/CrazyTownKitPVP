@@ -41,9 +41,12 @@ public class DeathMessages implements Listener {
 		} else if (dc == DamageCause.DROWNING) {
 			Bukkit.broadcastMessage(
 					ChatColor.RED + "" + ChatColor.BOLD + d.getName() + ChatColor.GOLD + " forgot to breathe!");
+		} else if (dc == DamageCause.VOID) {
+			Bukkit.broadcastMessage(
+					ChatColor.RED + "" + ChatColor.BOLD + d.getName() + ChatColor.GOLD + " fell for the fake chunk error.");
 		} else {
 			Bukkit.broadcastMessage(
-					ChatColor.RED + "" + ChatColor.BOLD + d.getName() + ChatColor.GOLD + " took his own life.");
+					ChatColor.RED + "" + ChatColor.BOLD + d.getName() + ChatColor.GOLD + " took their own life.");
 		}
 	}
 

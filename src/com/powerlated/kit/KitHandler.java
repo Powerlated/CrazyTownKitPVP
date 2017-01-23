@@ -47,12 +47,13 @@ public final class KitHandler {
 				return k;
 			}
 		}
-		Bukkit.broadcastMessage("RETURNED NULL FOR getKit");
 		return null;
 	}
 	
 	public static void setPlayerKit(Player p, Kit k) {
-		
+		if (kitMap.get(p.getUniqueId()) != null) {
+			kitMap.get(p.getUniqueId()).remove(p);
+		}
 		Util.clearInventory(p);
 		kitMap.put(p.getUniqueId(), k);
 		p.sendMessage("Equipped " + k.getName() + " Kit");

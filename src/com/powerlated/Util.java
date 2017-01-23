@@ -94,7 +94,7 @@ public class Util {
 	}
 
 	public static void launch(double vel, Player p) {
-		p.setVelocity(p.getVelocity().add(new Vector(0.0, vel, 0.0)));
+		p.setVelocity(p.getVelocity().setY(vel));
 	}
 	
 }

@@ -1,5 +1,8 @@
 package com.powerlated.kit.vanilla;
 
+import java.util.HashSet;
+import java.util.UUID;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.Material;
@@ -26,10 +29,12 @@ import com.powerlated.kit.KitHandler;
 
 public class RobinHood extends Kit implements Listener {
 	int counter = 0;
+	private HashSet<UUID> shooting = new HashSet<UUID>();
 
 	@EventHandler
 	public void rapidFire(EntityShootBowEvent event) {
-		if (event.getEntity() instanceof Player && KitHandler.kitMap.get(event.getEntity().getUniqueId()) instanceof RobinHood) {
+		if (event.getEntity() instanceof Player
+				&& KitHandler.kitMap.get(event.getEntity().getUniqueId()) instanceof RobinHood) {
 			ItemStack itemInHand = ((Player) event.getEntity()).getInventory().getItemInMainHand();
 			ItemMeta itemInHandMeta = itemInHand.getItemMeta();
 			if (itemInHandMeta.getDisplayName() == null) {
@@ -39,24 +44,24 @@ public class RobinHood extends Kit implements Listener {
 					&& itemInHandMeta.getDisplayName().equals(ChatColor.AQUA + "Epic Bow")) {
 				Player p = (Player) event.getEntity();
 				Projectile arrow = (Projectile) event.getProjectile();
-
-				new BukkitRunnable() {
-
-					@Override
-					public void run() {
-						Vector speed = arrow.getVelocity();
-						Projectile spawned = p.launchProjectile(Arrow.class, speed);
-						p.playSound(p.getLocation(), Sound.ENTITY_ARROW_SHOOT, 1, 1);
-						spawned.setVelocity(speed);
-						spawned.setShooter(p);
-						counter++;
-						if (counter > 10) {
-							this.cancel();
-							counter = 0;
+				if (!shooting.contains(p.getUniqueId())) {
+					shooting.add(p.getUniqueId());
+					new BukkitRunnable() {
+						@Override
+						public void run() {
+							Projectile spawned = p.launchProjectile(Arrow.class);
+							p.playSound(p.getLocation(), Sound.ENTITY_ARROW_SHOOT, 1, 1);
+							spawned.setShooter(p);
+							counter++;
+							Player p = (Player) spawned.getShooter();
+							if (counter > 10 && !p.isSneaking()) {
+								this.cancel();
+								counter = 0;
+								shooting.remove(p.getUniqueId());
+							}
 						}
-					}
-
-				}.runTaskTimer(CrazyBucket.cb, 0, 1);
+					}.runTaskTimer(CrazyBucket.cb, 0, 1);
+				}
 				arrow.remove();
 			}
 		}
@@ -105,7 +110,7 @@ public class RobinHood extends Kit implements Listener {
 		bow.addEnchantment(Enchantment.ARROW_INFINITE, 1);
 		pi.addItem(bow, arrow);
 	}
-	
+
 	private static void green(ItemStack is) {
 		ItemMeta im = is.getItemMeta();
 		LeatherArmorMeta lam = (LeatherArmorMeta) im;
@@ -115,6 +120,6 @@ public class RobinHood extends Kit implements Listener {
 
 	@Override
 	public void remove(Player p) {
-		
+
 	}
 }
