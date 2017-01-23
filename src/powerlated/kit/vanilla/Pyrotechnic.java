@@ -42,8 +42,7 @@ public class Pyrotechnic extends Kit implements Listener {
 				if (shooter == event.getEntity()) {
 					event.setDamage(event.getDamage() / 4);
 					Player p = (Player) event.getEntity();
-					p.sendMessage("Reduced damage for Powerlated.");
-					Util.launch(2, p);
+					Util.launch(0.75, p);
 				}
 			}
 		}
