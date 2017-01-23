@@ -1,4 +1,4 @@
-package powerlated.kit;
+package powerlated.kit.vanilla;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -16,6 +16,8 @@ import org.bukkit.scheduler.BukkitTask;
 
 import powerlated.CrazyBucket;
 import powerlated.Util;
+import powerlated.kit.Kit;
+import powerlated.kit.Kits;
 
 public class Ghost extends Kit {
 	public static HashMap<UUID, BukkitTask> ghostMap = new HashMap<UUID, BukkitTask>();

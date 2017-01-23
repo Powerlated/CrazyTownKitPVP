@@ -1,4 +1,4 @@
-package powerlated.kit;
+package powerlated.kit.vanilla;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -11,6 +11,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
 import powerlated.Util;
+import powerlated.kit.Kit;
+import powerlated.kit.KitHandler;
+import powerlated.kit.Kits;
 
 public class Orc extends Kit implements Listener {
 	@EventHandler

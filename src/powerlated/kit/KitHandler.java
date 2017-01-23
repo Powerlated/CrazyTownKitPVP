@@ -10,6 +10,10 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import powerlated.KitConflictException;
+import powerlated.kit.vanilla.Ghost;
+import powerlated.kit.vanilla.Orc;
+import powerlated.kit.vanilla.Pyrotechnic;
+import powerlated.kit.vanilla.RobinHood;
 
 public final class KitHandler {
 	private PluginManager pm = cb.getServer().getPluginManager();

@@ -1,4 +1,4 @@
-package powerlated.kit;
+package powerlated.kit.vanilla;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -24,6 +24,8 @@ import org.bukkit.scheduler.BukkitScheduler;
 
 import powerlated.CrazyBucket;
 import powerlated.Util;
+import powerlated.kit.Kit;
+import powerlated.kit.Kits;
 
 public class Pyrotechnic extends Kit implements Listener {
 	private HashSet<Player> noFireball = new HashSet<Player>();
