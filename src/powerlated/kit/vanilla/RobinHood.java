@@ -22,13 +22,14 @@ import org.bukkit.util.Vector;
 import powerlated.CrazyBucket;
 import powerlated.Util;
 import powerlated.kit.Kit;
+import powerlated.kit.KitHandler;
 
 public class RobinHood extends Kit implements Listener {
 	int counter = 0;
 
 	@EventHandler
 	public void rapidFire(EntityShootBowEvent event) {
-		if (event.getEntity() instanceof Player) {
+		if (event.getEntity() instanceof Player && KitHandler.kitMap.get(event.getEntity().getUniqueId()) instanceof RobinHood) {
 			ItemStack itemInHand = ((Player) event.getEntity()).getInventory().getItemInMainHand();
 			ItemMeta itemInHandMeta = itemInHand.getItemMeta();
 			if (itemInHandMeta.getDisplayName() == null) {

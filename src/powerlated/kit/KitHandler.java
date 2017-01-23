@@ -52,6 +52,7 @@ public final class KitHandler {
 	}
 	
 	public static void setPlayerKit(Player p, Kit k) {
+		Util.clearInventory(p);
 		p.sendMessage("Equipped " + k.getName() + " Kit");
 		Util.removeEffects(p);
 		Util.addEffects(p);

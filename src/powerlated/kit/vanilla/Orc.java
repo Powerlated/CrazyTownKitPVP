@@ -37,8 +37,6 @@ public class Orc extends Kit implements Listener {
 
 	@Override
 	public void give(Player p) {
-		Util.clearInventory(p);
-		Util.removeEffects(p);
 		PlayerInventory pi = p.getInventory();
 		pi.setHelmet(new ItemStack(Material.CHAINMAIL_HELMET));
 		pi.setChestplate(new ItemStack(Material.CHAINMAIL_CHESTPLATE));

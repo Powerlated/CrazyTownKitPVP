@@ -25,6 +25,7 @@ import org.bukkit.scheduler.BukkitScheduler;
 import powerlated.CrazyBucket;
 import powerlated.Util;
 import powerlated.kit.Kit;
+import powerlated.kit.KitHandler;
 
 public class Pyrotechnic extends Kit implements Listener {
 	private HashSet<Player> noFireball = new HashSet<Player>();
@@ -40,7 +41,7 @@ public class Pyrotechnic extends Kit implements Listener {
 	@EventHandler
 	public void shootFireball(PlayerInteractEvent event) {
 		Player player = event.getPlayer();
-		if (!noFireball.contains(player)) {
+		if (!noFireball.contains(player) && KitHandler.kitMap.get(event.getPlayer().getUniqueId()) instanceof Pyrotechnic) {
 			if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
 				ItemStack itemInHand = player.getInventory().getItemInMainHand();
 				ItemMeta itemInHandMeta = itemInHand.getItemMeta();
