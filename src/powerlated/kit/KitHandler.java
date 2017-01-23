@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.UUID;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -40,10 +41,11 @@ public final class KitHandler {
 
 	public static Kit getKit(String input) {
 		for (Kit k : registeredKits) {
-			if (k.getName() == input) {
+			if (k.getName().equalsIgnoreCase(input)) {
 				return k;
 			}
 		}
+		Bukkit.broadcastMessage("RETURNED NULL FOR getKit");
 		return null;
 	}
 	
