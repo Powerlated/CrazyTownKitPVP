@@ -11,6 +11,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Fireball;
+import org.bukkit.entity.LargeFireball;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -32,16 +33,27 @@ public class Pyrotechnic extends Kit implements Listener {
 	static BukkitScheduler scheduler = Bukkit.getServer().getScheduler();
 
 	@EventHandler
-    public void selfDamage(EntityDamageByEntityEvent event){
-        if (event.getEntity() instanceof Player && event.getDamager() == event.getEntity()) {
-            event.setDamage(event.getDamage() / 4);
-        }
-    }
-	
+	public void selfDamage(EntityDamageByEntityEvent event) {
+		System.out.println(event.getDamager());
+		if (event.getEntity() instanceof Player && event.getDamager() instanceof LargeFireball) {
+			LargeFireball lf = (LargeFireball) event.getDamager();
+			if (lf.getShooter() instanceof Player) {
+				Player shooter = (Player) lf.getShooter();
+				if (shooter == event.getEntity()) {
+					event.setDamage(event.getDamage() / 4);
+					Player p = (Player) event.getEntity();
+					p.sendMessage("Reduced damage for Powerlated.");
+					Util.launch(2, p);
+				}
+			}
+		}
+	}
+
 	@EventHandler
 	public void shootFireball(PlayerInteractEvent event) {
 		Player player = event.getPlayer();
-		if (!noFireball.contains(player) && KitHandler.kitMap.get(event.getPlayer().getUniqueId()) instanceof Pyrotechnic) {
+		if (!noFireball.contains(player)
+				&& KitHandler.kitMap.get(event.getPlayer().getUniqueId()) instanceof Pyrotechnic) {
 			if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
 				ItemStack itemInHand = player.getInventory().getItemInMainHand();
 				ItemMeta itemInHandMeta = itemInHand.getItemMeta();

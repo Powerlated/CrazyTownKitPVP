@@ -183,10 +183,10 @@ public final class Events implements Listener {
 					}
 					if (contents[0] != null && contents[1] != null) {
 						double launchAmount = contents[0].getAmount() + contents[1].getAmount();
-						launch(launchAmount, p);
+						Util.launch(launchAmount, p);
 						return;
 					} else if (contents[0] != null) {
-						launch(contents[0].getAmount(), p);
+						Util.launch(contents[0].getAmount(), p);
 						return;
 					}
 				}
@@ -198,10 +198,6 @@ public final class Events implements Listener {
 	public void towerWrongAnswerDeath(String s) {
 		Bukkit.broadcastMessage(ChatColor.RED + s + ChatColor.WHITE + " chose the wrong answer in the " + ChatColor.AQUA
 				+ "Tower of Challenges");
-	}
-
-	public void launch(double vel, Player p) {
-		p.getPlayer().getVelocity().add(new Vector(p.getVelocity().getX(), vel, p.getVelocity().getZ()));
 	}
 
 	Location v;

@@ -13,6 +13,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.material.Openable;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.util.Vector;
 
 public class Util {
 	// This is not my code!
@@ -90,6 +91,10 @@ public class Util {
 		ItemMeta im = item.getItemMeta();
 		im.setUnbreakable(true);
 		item.setItemMeta(im);
+	}
+
+	public static void launch(double vel, Player p) {
+		p.setVelocity(p.getVelocity().add(new Vector(0.0, vel, 0.0)));
 	}
 	
 }

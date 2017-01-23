@@ -52,6 +52,7 @@ public final class KitHandler {
 	}
 	
 	public static void setPlayerKit(Player p, Kit k) {
+		
 		Util.clearInventory(p);
 		kitMap.put(p.getUniqueId(), k);
 		p.sendMessage("Equipped " + k.getName() + " Kit");
