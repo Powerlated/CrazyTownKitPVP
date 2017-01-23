@@ -7,3 +7,6 @@ commands:
     aliases: [cbk]
     permission: crazybucket.kitpvp
     usage: Just type it.
+  addkills:
+  setkills:
+  

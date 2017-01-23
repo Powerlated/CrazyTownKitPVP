@@ -62,6 +62,9 @@ public final class CrazyBucket extends JavaPlugin {
 			}
 			return true;
 		}
+		if (cmd.getName().equalsIgnoreCase("setkills")) {
+	
+		}
 		return false;
 	}
 }

@@ -75,9 +75,8 @@ public final class Events implements Listener {
 		 * 
 		 * }; br.runTaskTimer(cb, 0, 5); event.getPlayer().setAllowFlight(true);
 		 */
-		CBScoreboard cbs = new CBScoreboard();
-		CBScoreboard.cbsMap.put(event.getPlayer().getUniqueId(), cbs);
-		cbs.setup(event);
+		
+		CBScoreboard.setup(event.getPlayer());
 	}
 
 	@EventHandler
@@ -237,7 +236,7 @@ public final class Events implements Listener {
 		if ((event.getEntity().getKiller() instanceof Player) && event.getEntity().getKiller() != event.getEntity()) {
 			Player p = (Player) event.getEntity().getKiller();
 			CBScoreboard cbs = CBScoreboard.cbsMap.get(p.getUniqueId());
-			cbs.addKills(cbs.sidebarObjective);
+			// cbs.addKills(cbs.sidebarObjective);
 			DeathMessages.killMessage(event.getEntity().getKiller(), event.getEntity());
 		} else {
 			DeathMessages.message(event.getEntity());
