@@ -51,10 +51,6 @@ public final class CrazyBucket extends JavaPlugin {
 		}
 
 		pm.registerEvents(events, this);
-		pm.registerEvents(new Pyrotechnic(), this);
-		pm.registerEvents(new Orc(), this);
-		pm.registerEvents(new RobinHood(), this);
-		pm.registerEvents(new RobinHood(), this);
 		cb = this;
 	}
 

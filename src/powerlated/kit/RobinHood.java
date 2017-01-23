@@ -115,4 +115,9 @@ public class RobinHood extends Kit implements Listener {
 	public Kits getType() {
 		return Kits.ROBIN_HOOD;
 	}
+
+	@Override
+	public void remove(Player p) {
+		
+	}
 }

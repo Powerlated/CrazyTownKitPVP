@@ -52,4 +52,9 @@ public class Orc extends Kit implements Listener {
 		return Kits.ORC;
 	}
 
+	@Override
+	public void remove(Player p) {
+		
+	}
+
 }

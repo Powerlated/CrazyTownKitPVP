@@ -95,4 +95,9 @@ public class Pyrotechnic extends Kit implements Listener {
 	public Kits getType() {
 		return Kits.PYROMANIAC;
 	}
+
+	@Override
+	public void remove(Player p) {
+
+	}
 }

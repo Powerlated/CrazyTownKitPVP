@@ -12,6 +12,7 @@ import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.material.Openable;
 import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 public class Util {
 	// This is not my code!
@@ -73,6 +74,12 @@ public class Util {
 		i.clear();
 	}
 
+	private static void addEffects(Player player) {
+		player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 1000000, 2));
+		player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 1000000, 2));
+		player.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 1000000, 0));
+	}
+	
 	// Removes all potion effects from a player
 	public static void removeEffects(Player player) {
 		for (PotionEffect effect : player.getActivePotionEffects())
@@ -84,4 +91,5 @@ public class Util {
 		im.setUnbreakable(true);
 		item.setItemMeta(im);
 	}
+	
 }
