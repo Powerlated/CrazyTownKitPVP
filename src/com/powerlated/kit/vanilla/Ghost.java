@@ -30,10 +30,8 @@ public class Ghost extends Kit {
 		pi.setHelmet(new ItemStack(Material.SKULL, 1, (short) 1));
 		pi.setChestplate(new ItemStack(Material.IRON_CHESTPLATE));
 		pi.setLeggings(new ItemStack(Material.IRON_LEGGINGS));
-
 		p.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 1000000, 2));
 		BukkitTask br = new BukkitRunnable() {
-
 			@Override
 			public void run() {
 				ItemStack ps = new ItemStack(Material.SPLASH_POTION);
@@ -50,7 +48,6 @@ public class Ghost extends Kit {
 		}.runTaskTimer(CrazyBucket.cb, 0, 10);
 		ghostMap.put(p.getUniqueId(), br);
 	}
-
 
 	@Override
 	public void remove(Player p) {

@@ -43,15 +43,6 @@ public final class Events implements Listener {
 	WrappedDataWatcher ghastWatcher;
 	protected static CrazyBucket plugin;
 	protected Set<UUID> invincible = Collections.synchronizedSet(new HashSet<UUID>());
-	protected Map<UUID, Scoreboard> sidebarMap = new HashMap<UUID, Scoreboard>();
-	protected Map<UUID, CBScoreboard> cbsMap = new HashMap<UUID, CBScoreboard>();
-	protected Objective sidebarObjective;
-	protected Score kills;
-	protected Score killStreak;
-	protected Score killsNumber;
-	protected Score killStreakNumber;
-	protected int killsNumberInt;
-	protected int killStreakNumberInt;
 	protected CrazyBucket cb;
 	Runtime r = Runtime.getRuntime();
 
@@ -59,18 +50,8 @@ public final class Events implements Listener {
 
 	}
 
-	public Events(Set<UUID> invincible, Map<UUID, Scoreboard> sidebarMap, Map<UUID, CBScoreboard> cbsMap,
-			Objective sidebarObjective, Score kills, Score killStreak, Score killStreakNumber, Score killsNumber,
-			int killsNumberInt, int killStreakNumberInt, CrazyBucket cb) {
+	public Events(Set<UUID> invincible, CrazyBucket cb) {
 		this.invincible = invincible;
-		this.sidebarMap = sidebarMap;
-		this.cbsMap = cbsMap;
-		this.sidebarObjective = sidebarObjective;
-		this.kills = kills;
-		this.killStreak = killStreak;
-		this.killStreakNumber = killStreakNumber;
-		this.killsNumberInt = killsNumberInt;
-		this.killStreakNumberInt = killStreakNumberInt;
 		this.cb = cb;
 	}
 
@@ -93,13 +74,13 @@ public final class Events implements Listener {
 		 * }; br.runTaskTimer(cb, 0, 5); event.getPlayer().setAllowFlight(true);
 		 */
 		CBScoreboard cbs = new CBScoreboard();
-		cbsMap.put(event.getPlayer().getUniqueId(), cbs);
-		cbs.setup(event, invincible, sidebarMap, sidebarObjective, kills, killsNumber, killStreak, killStreakNumber);
+		CBScoreboard.cbsMap.put(event.getPlayer().getUniqueId(), cbs);
+		cbs.setup(event);
 	}
 
 	@EventHandler
 	public void logOut(PlayerQuitEvent event) {
-		cbsMap.remove(event.getPlayer());
+		CBScoreboard.cbsMap.remove(event.getPlayer());
 	}
 
 	// Scoreboard
@@ -255,8 +236,8 @@ public final class Events implements Listener {
 	public void onDeath(PlayerDeathEvent event) {
 		if ((event.getEntity().getKiller() instanceof Player) && event.getEntity().getKiller() != event.getEntity()) {
 			Player p = (Player) event.getEntity().getKiller();
-			CBScoreboard cbs = cbsMap.get(p.getUniqueId());
-			cbs.addKills(sidebarObjective);
+			CBScoreboard cbs = CBScoreboard.cbsMap.get(p.getUniqueId());
+			cbs.addKills(cbs.sidebarObjective);
 			DeathMessages.killMessage(event.getEntity().getKiller(), event.getEntity());
 		} else {
 			DeathMessages.message(event.getEntity());

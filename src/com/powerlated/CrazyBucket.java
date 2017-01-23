@@ -20,7 +20,6 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Score;
-import org.bukkit.scoreboard.Scoreboard;
 
 import com.comphenix.protocol.wrappers.WrappedWatchableObject;
 import com.powerlated.kit.*;
@@ -28,49 +27,32 @@ import com.powerlated.kit.*;
 public final class CrazyBucket extends JavaPlugin {
 	private PluginManager pm = getServer().getPluginManager();
 	protected Set<UUID> invincible = Collections.synchronizedSet(new HashSet<UUID>());
-	protected Map<UUID, Scoreboard> sidebarMap = new HashMap<UUID, Scoreboard>();
-	protected Map<UUID, CBScoreboard> cbsMap = new HashMap<UUID, CBScoreboard>();
-	protected Objective sidebarObjective;
-	protected Score kills;
-	protected Score killStreak;
-	protected Score killsNumber;
-	protected Score killStreakNumber;
-	protected int killsNumberInt;
-	protected int killStreakNumberInt;
-	Events events = new Events(invincible, sidebarMap, cbsMap, sidebarObjective, kills, killStreak, killsNumber,
-			killStreakNumber, killsNumberInt, killStreakNumberInt, this);
+	
+	// Sends all scoreboard values into Events
+	Events events = new Events(invincible, this);
 	public static CrazyBucket cb;
-
+	
 	@Override
 	public void onEnable() {
-		events.ghastWatcher = events.getDefaultWatcher(getServer().getWorlds().get(0), EntityType.GHAST);
-
-		for (WrappedWatchableObject object : events.ghastWatcher)
-			System.out.println(object);
-		for (Player p : this.getServer().getOnlinePlayers()) {
-			p.setAllowFlight(true);
-		}
-
+		// Registers events for Events class
 		pm.registerEvents(events, this);
+		// Gets instance of plugin
 		cb = this;
+		// Puts instance of self and PluginManager into KitHandler.
 		KitHandler.cb = this;
 		KitHandler.pm = pm;
+		// Registers default kits
 		try {
 			KitHandler.registerDefaultKits();
 		} catch (KitNameConflictException e) {
 			e.printStackTrace();
 		}
 	}
-
+	
+	// Unregisters events and resets objectives.
 	@Override
 	public void onDisable() {
 		invincible = null;
-		sidebarMap = null;
-		cbsMap = null;
-		sidebarObjective = null;
-		kills = null;
-		killStreak = null;
-		killsNumber = null;
 		Bukkit.broadcastMessage(
 				ChatColor.RED + "Please note that CrazyBucketKitPVP will break if players do not relog.");
 		HandlerList.unregisterAll((Plugin) this);
@@ -78,6 +60,7 @@ public final class CrazyBucket extends JavaPlugin {
 	
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+		// Lists all kits registered
 		if (cmd.getName().equalsIgnoreCase("cbkits")) {
 			sender.sendMessage("Kits available:");
 			for (Kit kit : KitHandler.registeredKits) {

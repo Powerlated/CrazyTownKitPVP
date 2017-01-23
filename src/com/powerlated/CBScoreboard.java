@@ -1,5 +1,6 @@
 package com.powerlated;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
@@ -11,21 +12,34 @@ import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Score;
 import org.bukkit.scoreboard.Scoreboard;
+import org.bukkit.scoreboard.ScoreboardManager;
 
 public final class CBScoreboard {
 	Scoreboard sidebar;
-	Score kills;
-	Score killStreak;
-	Score killStreakNumber;
-	Score killsNumber;
-	int killsNumberInt = 1;
 
-	public void setup(PlayerJoinEvent event, Set<UUID> invincible, Map<UUID, Scoreboard> sidebarMap,
-			Objective sidebarObjective, Score kills, Score killsNumber, Score killStreak, Score killStreakNumber) {
-		Scoreboard sidebar = Bukkit.getScoreboardManager().getNewScoreboard();
+	protected static Map<UUID, CBScoreboard> cbsMap = new HashMap<UUID, CBScoreboard>();
+	protected Objective sidebarObjective;
+	protected Score kills;
+	protected Score killStreak;
+	protected Score killsNumber;
+	protected Score killStreakNumber;
+	protected int killsNumberInt;
+	protected int killStreakNumberInt;
+
+	// Gets scoreboard manager
+	ScoreboardManager manager = Bukkit.getScoreboardManager();
+	protected Map<UUID, Scoreboard> sidebarMap = new HashMap<UUID, Scoreboard>();
+	public void setup(PlayerJoinEvent event) {
+		
+		// Gets a new scoreboard and puts it in the player's scoreboard.
+		Scoreboard sidebar = manager.getNewScoreboard();
 		sidebarMap.put(event.getPlayer().getUniqueId(), sidebar);
+
+		// Creates scoreboard objective and sets it to the
 		sidebarObjective = sidebar.registerNewObjective("sidebarObjective", "dummy");
 		sidebarObjective.setDisplaySlot(DisplaySlot.SIDEBAR);
+
+		// Sets up the scoreboard
 		sidebarObjective.setDisplayName(ChatColor.GOLD + "" + ChatColor.BOLD + "CRAZY BUCKET");
 		kills = sidebarObjective.getScore(ChatColor.RED + "" + ChatColor.BOLD + "Kills:");
 		killsNumber = sidebarObjective.getScore(ChatColor.AQUA + "" + ChatColor.BOLD + Integer.toString(0));
@@ -41,10 +55,6 @@ public final class CBScoreboard {
 		// killStreakNumber.setScore(0);
 		event.getPlayer().setScoreboard(sidebar);
 		this.sidebar = sidebar;
-		this.kills = kills;
-		this.killStreak = killStreak;
-		this.killStreakNumber = killStreakNumber;
-		this.killsNumber = killsNumber;
 	}
 
 	public void addKills(Objective sidebarObjective) {
@@ -86,6 +96,5 @@ public final class CBScoreboard {
 		// killStreakNumber.setScore(0);
 		this.killsNumberInt = set;
 	}
-	
-	
+
 }
