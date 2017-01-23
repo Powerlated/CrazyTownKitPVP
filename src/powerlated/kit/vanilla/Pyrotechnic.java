@@ -42,7 +42,7 @@ public class Pyrotechnic extends Kit implements Listener {
 				if (shooter == event.getEntity()) {
 					event.setDamage(event.getDamage() / 4);
 					Player p = (Player) event.getEntity();
-					Util.launch(0.75, p);
+					Util.launch(0.25, p);
 				}
 			}
 		}

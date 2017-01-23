@@ -15,7 +15,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
 import powerlated.CrazyBucket;
-import powerlated.Util;
 import powerlated.kit.Kit;
 
 public class Ghost extends Kit {
