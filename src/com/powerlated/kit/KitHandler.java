@@ -21,7 +21,6 @@ public final class KitHandler {
 	public static PluginManager pm;
 	public static HashMap<UUID, Kit> kitMap = new HashMap<UUID, Kit>();
 	public static HashSet<Kit> registeredKits = new HashSet<Kit>();
-	
 
 	public static void registerKit(Kit kit) throws KitNameConflictException {
 		for (Kit k : registeredKits) {
@@ -32,7 +31,7 @@ public final class KitHandler {
 		registeredKits.add(kit);
 		pm.registerEvents(kit, cb);
 	}
-	
+
 	public static void registerDefaultKits() throws KitNameConflictException {
 		registerKit(new Orc());
 		registerKit(new Ghost());
@@ -48,7 +47,7 @@ public final class KitHandler {
 		}
 		return null;
 	}
-	
+
 	public static void setPlayerKit(Player p, Kit k) {
 		if (kitMap.get(p.getUniqueId()) != null) {
 			kitMap.get(p.getUniqueId()).remove(p);

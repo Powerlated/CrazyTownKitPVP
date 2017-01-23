@@ -21,11 +21,11 @@ import com.powerlated.kit.KitHandler;
 public final class CrazyBucket extends JavaPlugin {
 	private PluginManager pm = getServer().getPluginManager();
 	protected Set<UUID> invincible = Collections.synchronizedSet(new HashSet<UUID>());
-	
+
 	// Sends all scoreboard values into Events
 	Events events = new Events(invincible, this);
 	public static CrazyBucket cb;
-	
+
 	@Override
 	public void onEnable() {
 		// Registers events for Events class
@@ -42,7 +42,7 @@ public final class CrazyBucket extends JavaPlugin {
 			e.printStackTrace();
 		}
 	}
-	
+
 	// Unregisters events and resets objectives.
 	@Override
 	public void onDisable() {
@@ -51,7 +51,7 @@ public final class CrazyBucket extends JavaPlugin {
 				ChatColor.RED + "Please note that CrazyBucketKitPVP will break if players do not relog.");
 		HandlerList.unregisterAll((Plugin) this);
 	}
-	
+
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		// Lists all kits registered

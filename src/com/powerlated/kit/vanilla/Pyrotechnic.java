@@ -91,7 +91,8 @@ public class Pyrotechnic extends Kit implements Listener {
 		Map<Enchantment, Integer> enchantments = new HashMap<Enchantment, Integer>();
 		enchantments.put(Enchantment.FIRE_ASPECT, 2);
 		enchantments.put(Enchantment.DAMAGE_ALL, 2);
-		ItemStack[] is = { new ItemStack(Material.BLAZE_ROD, 1), new ItemStack(Material.LEATHER_CHESTPLATE, 1), new ItemStack(Material.LEATHER_BOOTS) };
+		ItemStack[] is = { new ItemStack(Material.BLAZE_ROD, 1), new ItemStack(Material.LEATHER_CHESTPLATE, 1),
+				new ItemStack(Material.LEATHER_BOOTS) };
 		is[0].addUnsafeEnchantments(enchantments);
 		// Makes the red chestplate unbreakable
 		ItemMeta im = (ItemMeta) is[0].getItemMeta();

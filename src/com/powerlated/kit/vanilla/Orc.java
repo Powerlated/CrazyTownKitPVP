@@ -49,7 +49,7 @@ public class Orc extends Kit implements Listener {
 
 	@Override
 	public void remove(Player p) {
-		
+
 	}
 
 }

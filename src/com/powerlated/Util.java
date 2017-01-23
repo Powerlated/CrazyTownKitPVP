@@ -79,7 +79,7 @@ public class Util {
 		player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 1000000, 2));
 		player.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 1000000, 0));
 	}
-	
+
 	// Removes all potion effects from a player
 	public static void removeEffects(Player player) {
 		for (PotionEffect effect : player.getActivePotionEffects())
@@ -95,5 +95,5 @@ public class Util {
 	public static void launch(double vel, Player p) {
 		p.setVelocity(p.getVelocity().setY(vel));
 	}
-	
+
 }

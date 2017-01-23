@@ -19,6 +19,7 @@ import com.powerlated.kit.Kit;
 
 public class Ghost extends Kit {
 	public static HashMap<UUID, BukkitTask> ghostMap = new HashMap<UUID, BukkitTask>();
+
 	@Override
 	public String getName() {
 		return "Ghost";

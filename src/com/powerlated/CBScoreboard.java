@@ -28,8 +28,9 @@ public final class CBScoreboard {
 	// Gets scoreboard manager
 	ScoreboardManager manager = Bukkit.getScoreboardManager();
 	protected Map<UUID, Scoreboard> sidebarMap = new HashMap<UUID, Scoreboard>();
+
 	public void setup(PlayerJoinEvent event) {
-		
+
 		// Gets a new scoreboard and puts it in the player's scoreboard.
 		Scoreboard sidebar = manager.getNewScoreboard();
 		sidebarMap.put(event.getPlayer().getUniqueId(), sidebar);
