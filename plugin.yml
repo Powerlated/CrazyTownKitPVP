@@ -1,5 +1,5 @@
 name: CrazyBucket
-main: powerlated.CrazyBucket
+main: com.powerlated.CrazyBucket
 version: 1.0
 commands:
   cbkits:
