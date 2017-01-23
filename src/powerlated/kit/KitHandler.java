@@ -18,7 +18,7 @@ import powerlated.kit.vanilla.RobinHood;
 public final class KitHandler {
 	private PluginManager pm = cb.getServer().getPluginManager();
 	public static HashMap<UUID, Kit> kitMap = new HashMap<UUID, Kit>();
-	protected static HashSet<Kit> registeredKits = new HashSet<Kit>();
+	public static HashSet<Kit> registeredKits = new HashSet<Kit>();
 	static JavaPlugin cb;
 
 	public static void registerKit(Kit kit) throws KitNameConflictException {
@@ -27,6 +27,8 @@ public final class KitHandler {
 				throw new KitNameConflictException();
 			}
 		}
+		registeredKits.add(kit);
+		
 	}
 	
 	public static void registerDefaultKits() throws KitNameConflictException {
@@ -43,5 +45,9 @@ public final class KitHandler {
 			}
 		}
 		return null;
+	}
+	
+	public static void setPlayerKit(Player p, Kit k) {
+		
 	}
 }

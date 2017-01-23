@@ -190,8 +190,7 @@ public final class Events implements Listener {
 	}
 
 	public void launch(double vel, Player p) {
-		Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> p.getPlayer().setVelocity(
-				p.getPlayer().getVelocity().add(new Vector(p.getVelocity().getX(), vel, p.getVelocity().getZ()))));
+		p.getPlayer().getVelocity().add(new Vector(p.getVelocity().getX(), vel, p.getVelocity().getZ()));
 	}
 
 	Location v;

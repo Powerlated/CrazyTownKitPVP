@@ -10,6 +10,8 @@ import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
@@ -52,6 +54,11 @@ public final class CrazyBucket extends JavaPlugin {
 
 		pm.registerEvents(events, this);
 		cb = this;
+		try {
+			KitHandler.registerDefaultKits();
+		} catch (KitNameConflictException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -67,5 +74,16 @@ public final class CrazyBucket extends JavaPlugin {
 				ChatColor.RED + "Please note that CrazyBucketKitPVP will break if players do not relog.");
 		HandlerList.unregisterAll((Plugin) this);
 	}
-
+	
+	@Override
+	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+		if (cmd.getName().equalsIgnoreCase("cbkits")) {
+			sender.sendMessage("Kits available:");
+			for (Kit kit : KitHandler.registeredKits) {
+				sender.sendMessage(kit.getName());
+			}
+			return true;
+		}
+		return false;
+	}
 }
