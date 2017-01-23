@@ -17,7 +17,6 @@ import org.bukkit.scheduler.BukkitTask;
 import powerlated.CrazyBucket;
 import powerlated.Util;
 import powerlated.kit.Kit;
-import powerlated.kit.Kits;
 
 public class Ghost extends Kit {
 	public static HashMap<UUID, BukkitTask> ghostMap = new HashMap<UUID, BukkitTask>();
@@ -53,10 +52,6 @@ public class Ghost extends Kit {
 		ghostMap.put(p.getUniqueId(), br);
 	}
 
-	@Override
-	public Kits getType() {
-		return Kits.GHOST;
-	}
 
 	@Override
 	public void remove(Player p) {

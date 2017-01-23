@@ -1,6 +1,6 @@
 package powerlated;
 
-public class KitConflictException extends Exception {
+public class KitNameConflictException extends Exception {
 	private static final long serialVersionUID = 1L;
 
 }

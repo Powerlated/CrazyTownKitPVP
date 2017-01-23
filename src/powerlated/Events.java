@@ -38,7 +38,6 @@ import org.bukkit.util.Vector;
 import com.comphenix.protocol.wrappers.WrappedDataWatcher;
 
 import powerlated.kit.KitHandler;
-import powerlated.kit.Kits;
 
 public final class Events implements Listener {
 	WrappedDataWatcher ghastWatcher;
@@ -125,10 +124,7 @@ public final class Events implements Listener {
 				String line1 = sign.getLine(0);
 				String line2 = sign.getLine(1);
 				if (line1.equals(ChatColor.DARK_BLUE + "-Kit-")) {
-					Kits k = KitHandler.toEnum(line2);
-					if (k != null) {
-						KitHandler.select(k, event.getPlayer(), event);
-					}
+					// TODO Make signs work!
 				}
 				Location sl = sign.getLocation();
 				if (sl.subtract(0.0, 2.0, 0.0).getBlock().getType() == Material.TORCH) {

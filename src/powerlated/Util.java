@@ -74,7 +74,7 @@ public class Util {
 		i.clear();
 	}
 
-	private static void addEffects(Player player) {
+	public static void addEffects(Player player) {
 		player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 1000000, 2));
 		player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 1000000, 2));
 		player.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 1000000, 0));

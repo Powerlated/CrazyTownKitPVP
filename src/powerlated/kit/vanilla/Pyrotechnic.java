@@ -25,7 +25,6 @@ import org.bukkit.scheduler.BukkitScheduler;
 import powerlated.CrazyBucket;
 import powerlated.Util;
 import powerlated.kit.Kit;
-import powerlated.kit.Kits;
 
 public class Pyrotechnic extends Kit implements Listener {
 	private HashSet<Player> noFireball = new HashSet<Player>();
@@ -91,11 +90,6 @@ public class Pyrotechnic extends Kit implements Listener {
 		is[1].setItemMeta(lam);
 		p.getInventory().addItem(is[0]);
 		p.getInventory().setChestplate(is[1]);
-	}
-
-	@Override
-	public Kits getType() {
-		return Kits.PYROMANIAC;
 	}
 
 	@Override

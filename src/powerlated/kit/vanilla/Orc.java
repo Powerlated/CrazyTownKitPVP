@@ -13,7 +13,6 @@ import org.bukkit.inventory.PlayerInventory;
 import powerlated.Util;
 import powerlated.kit.Kit;
 import powerlated.kit.KitHandler;
-import powerlated.kit.Kits;
 
 public class Orc extends Kit implements Listener {
 	@EventHandler
@@ -21,7 +20,7 @@ public class Orc extends Kit implements Listener {
 		if (KitHandler.kitMap.get(event.getDamager().getUniqueId()) == null) {
 			return;
 		}
-		if (KitHandler.kitMap.get(event.getDamager().getUniqueId()).equals(Kits.ORC)) {
+		if (KitHandler.kitMap.get(event.getDamager().getUniqueId()) instanceof Orc) {
 			Bukkit.broadcastMessage(KitHandler.kitMap.get(event.getDamager().getUniqueId()).toString());
 			if (event.getDamager() instanceof Player) {
 				Damageable damager = (Damageable) event.getDamager();
@@ -48,11 +47,6 @@ public class Orc extends Kit implements Listener {
 		ItemStack sword = new ItemStack(Material.WOOD_SWORD);
 		Util.unbreakable(sword);
 		pi.addItem(sword);
-	}
-
-	@Override
-	public Kits getType() {
-		return Kits.ORC;
 	}
 
 	@Override

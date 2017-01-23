@@ -22,7 +22,6 @@ import org.bukkit.util.Vector;
 import powerlated.CrazyBucket;
 import powerlated.Util;
 import powerlated.kit.Kit;
-import powerlated.kit.Kits;
 
 public class RobinHood extends Kit implements Listener {
 	int counter = 0;
@@ -111,11 +110,6 @@ public class RobinHood extends Kit implements Listener {
 		LeatherArmorMeta lam = (LeatherArmorMeta) im;
 		lam.setColor(Color.GREEN);
 		is.setItemMeta(lam);
-	}
-
-	@Override
-	public Kits getType() {
-		return Kits.ROBIN_HOOD;
 	}
 
 	@Override

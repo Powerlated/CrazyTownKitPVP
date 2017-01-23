@@ -6,5 +6,4 @@ public abstract class Kit {
 	public abstract String getName();
 	public abstract void give(Player p);
 	public abstract void remove(Player p);
-	public abstract Kits getType();
 }
