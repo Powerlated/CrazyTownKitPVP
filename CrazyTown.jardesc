@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="WINDOWS-1252" standalone="no"?>
+<jardesc>
+    <jar path="B:/Crazy Town/Minigames/Kitpvp/plugins/CrazyTown.jar"/>
+    <options buildIfNeeded="true" compress="true" descriptionLocation="/CrazyTownKitPVP/CrazyTown.jardesc" exportErrors="true" exportWarnings="true" includeDirectoryEntries="false" overwrite="true" saveDescription="true" storeRefactorings="false" useSourceFolders="false"/>
+    <storedRefactorings deprecationInfo="true" structuralOnly="false"/>
+    <selectedProjects/>
+    <manifest generateManifest="true" manifestLocation="" manifestVersion="1.0" reuseManifest="false" saveManifest="false" usesManifest="true">
+        <sealing sealJar="false">
+            <packagesToSeal/>
+            <packagesToUnSeal/>
+        </sealing>
+    </manifest>
+    <selectedElements exportClassFiles="true" exportJavaFiles="false" exportOutputFolder="false">
+        <javaElement handleIdentifier="=CrazyTownKitPVP/src"/>
+        <file path="/CrazyTownKitPVP/.classpath"/>
+        <file path="/CrazyTownKitPVP/.gitignore"/>
+        <file path="/CrazyTownKitPVP/plugin.yml"/>
+        <file path="/CrazyTownKitPVP/.project"/>
+        <folder path="/CrazyTownKitPVP/doc"/>
+        <folder path="/CrazyTownKitPVP/target"/>
+        <file path="/CrazyTownKitPVP/pom.xml"/>
+    </selectedElements>
+</jardesc>

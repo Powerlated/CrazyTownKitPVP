@@ -1,0 +1,4 @@
+name: CrazyBucket
+main: powerlated.CrazyBucket
+version: 1.0
+commands:
