@@ -54,6 +54,8 @@ public final class CrazyBucket extends JavaPlugin {
 
 		pm.registerEvents(events, this);
 		cb = this;
+		KitHandler.cb = this;
+		KitHandler.pm = pm;
 		try {
 			KitHandler.registerDefaultKits();
 		} catch (KitNameConflictException e) {

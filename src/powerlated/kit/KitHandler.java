@@ -11,16 +11,18 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import powerlated.KitNameConflictException;
+import powerlated.Util;
 import powerlated.kit.vanilla.Ghost;
 import powerlated.kit.vanilla.Orc;
 import powerlated.kit.vanilla.Pyrotechnic;
 import powerlated.kit.vanilla.RobinHood;
 
 public final class KitHandler {
-	private PluginManager pm = cb.getServer().getPluginManager();
+	public static JavaPlugin cb;
+	public static PluginManager pm;
 	public static HashMap<UUID, Kit> kitMap = new HashMap<UUID, Kit>();
 	public static HashSet<Kit> registeredKits = new HashSet<Kit>();
-	static JavaPlugin cb;
+	
 
 	public static void registerKit(Kit kit) throws KitNameConflictException {
 		for (Kit k : registeredKits) {
@@ -29,7 +31,7 @@ public final class KitHandler {
 			}
 		}
 		registeredKits.add(kit);
-		
+		pm.registerEvents(kit, cb);
 	}
 	
 	public static void registerDefaultKits() throws KitNameConflictException {
@@ -51,5 +53,8 @@ public final class KitHandler {
 	
 	public static void setPlayerKit(Player p, Kit k) {
 		p.sendMessage("Equipped " + k.getName() + " Kit");
+		Util.removeEffects(p);
+		Util.addEffects(p);
+		k.give(p);
 	}
 }
