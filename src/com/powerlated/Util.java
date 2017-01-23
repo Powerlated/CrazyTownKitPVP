@@ -13,7 +13,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.material.Openable;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.bukkit.util.Vector;
 
 public class Util {
 	// This is not my code!

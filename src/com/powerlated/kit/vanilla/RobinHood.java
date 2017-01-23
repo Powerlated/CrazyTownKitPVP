@@ -20,10 +20,8 @@ import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.util.Vector;
 
 import com.powerlated.CrazyBucket;
-import com.powerlated.Util;
 import com.powerlated.kit.Kit;
 import com.powerlated.kit.KitHandler;
 
@@ -101,7 +99,6 @@ public class RobinHood extends Kit implements Listener {
 		pi.setBoots(boots);
 		ItemStack bow = new ItemStack(Material.BOW);
 		ItemStack arrow = new ItemStack(Material.ARROW);
-		Util.unbreakable(bow);
 		ItemMeta bim = bow.getItemMeta();
 		bim.setDisplayName(ChatColor.AQUA + "Epic Bow");
 		bow.setItemMeta(bim);

@@ -5,7 +5,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
@@ -35,9 +34,6 @@ import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scoreboard.Objective;
-import org.bukkit.scoreboard.Score;
-import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.util.Vector;
 
 import com.comphenix.protocol.wrappers.WrappedDataWatcher;
@@ -187,8 +183,6 @@ public final class Events implements Listener {
 	}
 
 	Location v;
-	private Runnable task;
-
 	@EventHandler
 	public void onPlayerMove(PlayerMoveEvent event) {
 		/*

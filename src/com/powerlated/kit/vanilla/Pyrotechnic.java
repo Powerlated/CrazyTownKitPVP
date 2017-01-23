@@ -96,8 +96,6 @@ public class Pyrotechnic extends Kit implements Listener {
 		// Makes the red chestplate unbreakable
 		ItemMeta im = (ItemMeta) is[0].getItemMeta();
 		im.setDisplayName(ChatColor.YELLOW + "" + ChatColor.BOLD + "THE EPIC STICK OF EPICNESS");
-		Util.unbreakable(is[1]);
-		Util.unbreakable(is[2]);
 		// Gets leather armor metadata
 		LeatherArmorMeta lam = (LeatherArmorMeta) is[1].getItemMeta();
 		LeatherArmorMeta lam2 = (LeatherArmorMeta) is[2].getItemMeta();
