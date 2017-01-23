@@ -1,5 +1,5 @@
 
-package powerlated;
+package com.powerlated;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -23,8 +23,7 @@ import org.bukkit.scoreboard.Score;
 import org.bukkit.scoreboard.Scoreboard;
 
 import com.comphenix.protocol.wrappers.WrappedWatchableObject;
-
-import powerlated.kit.*;
+import com.powerlated.kit.*;
 
 public final class CrazyBucket extends JavaPlugin {
 	private PluginManager pm = getServer().getPluginManager();

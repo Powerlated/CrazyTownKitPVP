@@ -1,4 +1,4 @@
-package powerlated.kit.vanilla;
+package com.powerlated.kit.vanilla;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
@@ -19,10 +19,10 @@ import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
-import powerlated.CrazyBucket;
-import powerlated.Util;
-import powerlated.kit.Kit;
-import powerlated.kit.KitHandler;
+import com.powerlated.CrazyBucket;
+import com.powerlated.Util;
+import com.powerlated.kit.Kit;
+import com.powerlated.kit.KitHandler;
 
 public class RobinHood extends Kit implements Listener {
 	int counter = 0;

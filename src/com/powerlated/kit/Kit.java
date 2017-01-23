@@ -1,4 +1,4 @@
-package powerlated.kit;
+package com.powerlated.kit;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;

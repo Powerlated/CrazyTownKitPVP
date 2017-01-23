@@ -1,5 +1,5 @@
 
-package powerlated.kit;
+package com.powerlated.kit;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -10,12 +10,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import powerlated.KitNameConflictException;
-import powerlated.Util;
-import powerlated.kit.vanilla.Ghost;
-import powerlated.kit.vanilla.Orc;
-import powerlated.kit.vanilla.Pyrotechnic;
-import powerlated.kit.vanilla.RobinHood;
+import com.powerlated.KitNameConflictException;
+import com.powerlated.Util;
+import com.powerlated.kit.vanilla.Ghost;
+import com.powerlated.kit.vanilla.Orc;
+import com.powerlated.kit.vanilla.Pyrotechnic;
+import com.powerlated.kit.vanilla.RobinHood;
 
 public final class KitHandler {
 	public static JavaPlugin cb;

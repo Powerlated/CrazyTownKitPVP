@@ -1,4 +1,4 @@
-package powerlated;
+package com.powerlated;
 
 import java.util.Map;
 import java.util.Set;

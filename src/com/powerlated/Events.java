@@ -1,5 +1,5 @@
 
-package powerlated;
+package com.powerlated;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -36,9 +36,8 @@ import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.util.Vector;
 
 import com.comphenix.protocol.wrappers.WrappedDataWatcher;
-
-import powerlated.kit.Kit;
-import powerlated.kit.KitHandler;
+import com.powerlated.kit.Kit;
+import com.powerlated.kit.KitHandler;
 
 public final class Events implements Listener {
 	WrappedDataWatcher ghastWatcher;

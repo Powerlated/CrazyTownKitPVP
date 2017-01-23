@@ -1,4 +1,4 @@
-package powerlated.kit.vanilla;
+package com.powerlated.kit.vanilla;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -14,8 +14,8 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
-import powerlated.CrazyBucket;
-import powerlated.kit.Kit;
+import com.powerlated.CrazyBucket;
+import com.powerlated.kit.Kit;
 
 public class Ghost extends Kit {
 	public static HashMap<UUID, BukkitTask> ghostMap = new HashMap<UUID, BukkitTask>();

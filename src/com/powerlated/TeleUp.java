@@ -1,5 +1,5 @@
 
-package powerlated;
+package com.powerlated;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
