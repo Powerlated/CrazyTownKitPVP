@@ -1,4 +1,4 @@
-package powerlated.kit;
+package com.powerlated.kit.vanilla;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -11,6 +11,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Fireball;
+import org.bukkit.entity.LargeFireball;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -22,24 +23,37 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.scheduler.BukkitScheduler;
 
-import powerlated.CrazyBucket;
-import powerlated.Util;
+import com.powerlated.CrazyBucket;
+import com.powerlated.Util;
+import com.powerlated.kit.Kit;
+import com.powerlated.kit.KitHandler;
 
 public class Pyrotechnic extends Kit implements Listener {
 	private HashSet<Player> noFireball = new HashSet<Player>();
 	static BukkitScheduler scheduler = Bukkit.getServer().getScheduler();
 
 	@EventHandler
-    public void selfDamage(EntityDamageByEntityEvent event){
-        if (event.getEntity() instanceof Player && event.getDamager() == event.getEntity()) {
-            event.setDamage(event.getDamage() / 4);
-        }
-    }
-	
+	public void selfDamage(EntityDamageByEntityEvent event) {
+		System.out.println(event.getDamager());
+		if (event.getEntity() instanceof Player && event.getDamager() instanceof LargeFireball) {
+			LargeFireball lf = (LargeFireball) event.getDamager();
+			if (lf.getShooter() instanceof Player) {
+				Player shooter = (Player) lf.getShooter();
+				if (shooter == event.getEntity()) {
+					event.setDamage(event.getDamage() / 4);
+					Player p = (Player) event.getEntity();
+					Util.launch(0.75, p);
+					p.setFallDistance(0);
+				}
+			}
+		}
+	}
+
 	@EventHandler
 	public void shootFireball(PlayerInteractEvent event) {
 		Player player = event.getPlayer();
-		if (!noFireball.contains(player)) {
+		if (!noFireball.contains(player)
+				&& KitHandler.kitMap.get(event.getPlayer().getUniqueId()) instanceof Pyrotechnic) {
 			if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
 				ItemStack itemInHand = player.getInventory().getItemInMainHand();
 				ItemMeta itemInHandMeta = itemInHand.getItemMeta();
@@ -77,22 +91,32 @@ public class Pyrotechnic extends Kit implements Listener {
 		Map<Enchantment, Integer> enchantments = new HashMap<Enchantment, Integer>();
 		enchantments.put(Enchantment.FIRE_ASPECT, 2);
 		enchantments.put(Enchantment.DAMAGE_ALL, 2);
-		ItemStack[] is = { new ItemStack(Material.BLAZE_ROD, 1), new ItemStack(Material.LEATHER_CHESTPLATE, 1) };
+		ItemStack[] is = { new ItemStack(Material.BLAZE_ROD, 1), new ItemStack(Material.LEATHER_CHESTPLATE, 1),
+				new ItemStack(Material.LEATHER_BOOTS) };
 		is[0].addUnsafeEnchantments(enchantments);
 		// Makes the red chestplate unbreakable
-		Util.unbreakable(is[1]);
 		ItemMeta im = (ItemMeta) is[0].getItemMeta();
-		LeatherArmorMeta lam = (LeatherArmorMeta) is[1].getItemMeta();
 		im.setDisplayName(ChatColor.YELLOW + "" + ChatColor.BOLD + "THE EPIC STICK OF EPICNESS");
+		// Gets leather armor metadata
+		LeatherArmorMeta lam = (LeatherArmorMeta) is[1].getItemMeta();
+		LeatherArmorMeta lam2 = (LeatherArmorMeta) is[2].getItemMeta();
+		// Sets color to red
 		lam.setColor(Color.RED);
+		lam2.setColor(Color.RED);
+		// Enchants boots with Feather Falling IV
+		lam2.addEnchant(Enchantment.PROTECTION_FALL, 4, false);
+		// Sets item meta
 		is[0].setItemMeta(im);
 		is[1].setItemMeta(lam);
+		is[2].setItemMeta(lam2);
+		// Gives items
 		p.getInventory().addItem(is[0]);
 		p.getInventory().setChestplate(is[1]);
+		p.getInventory().setBoots(is[2]);
 	}
 
 	@Override
-	public Kits getType() {
-		return Kits.PYROMANIAC;
+	public void remove(Player p) {
+
 	}
 }

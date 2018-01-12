@@ -1,4 +1,4 @@
-package powerlated.kit;
+package com.powerlated.kit.vanilla;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -10,7 +10,9 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
-import powerlated.Util;
+import com.powerlated.Util;
+import com.powerlated.kit.Kit;
+import com.powerlated.kit.KitHandler;
 
 public class Orc extends Kit implements Listener {
 	@EventHandler
@@ -18,7 +20,7 @@ public class Orc extends Kit implements Listener {
 		if (KitHandler.kitMap.get(event.getDamager().getUniqueId()) == null) {
 			return;
 		}
-		if (KitHandler.kitMap.get(event.getDamager().getUniqueId()).equals(Kits.ORC)) {
+		if (KitHandler.kitMap.get(event.getDamager().getUniqueId()) instanceof Orc) {
 			Bukkit.broadcastMessage(KitHandler.kitMap.get(event.getDamager().getUniqueId()).toString());
 			if (event.getDamager() instanceof Player) {
 				Damageable damager = (Damageable) event.getDamager();
@@ -35,8 +37,6 @@ public class Orc extends Kit implements Listener {
 
 	@Override
 	public void give(Player p) {
-		Util.clearInventory(p);
-		Util.removeEffects(p);
 		PlayerInventory pi = p.getInventory();
 		pi.setHelmet(new ItemStack(Material.CHAINMAIL_HELMET));
 		pi.setChestplate(new ItemStack(Material.CHAINMAIL_CHESTPLATE));
@@ -48,8 +48,8 @@ public class Orc extends Kit implements Listener {
 	}
 
 	@Override
-	public Kits getType() {
-		return Kits.ORC;
+	public void remove(Player p) {
+
 	}
 
 }

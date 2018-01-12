@@ -1,10 +1,10 @@
 
-package powerlated;
+package com.powerlated;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
@@ -24,54 +24,36 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.scoreboard.Objective;
-import org.bukkit.scoreboard.Score;
-import org.bukkit.scoreboard.Scoreboard;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 import com.comphenix.protocol.wrappers.WrappedDataWatcher;
-
-import powerlated.kit.KitHandler;
-import powerlated.kit.Kits;
+import com.powerlated.kit.Kit;
+import com.powerlated.kit.KitHandler;
 
 public final class Events implements Listener {
 	WrappedDataWatcher ghastWatcher;
 	protected static CrazyBucket plugin;
 	protected Set<UUID> invincible = Collections.synchronizedSet(new HashSet<UUID>());
-	protected Map<UUID, Scoreboard> sidebarMap = new HashMap<UUID, Scoreboard>();
-	protected Map<UUID, CBScoreboard> cbsMap = new HashMap<UUID, CBScoreboard>();
-	protected Objective sidebarObjective;
-	protected Score kills;
-	protected Score killStreak;
-	protected Score killsNumber;
-	protected Score killStreakNumber;
-	protected int killsNumberInt;
-	protected int killStreakNumberInt;
 	protected CrazyBucket cb;
+	private static HashMap<UUID, Collection<PotionEffect>> effects = new HashMap<UUID, Collection<PotionEffect>>();
 	Runtime r = Runtime.getRuntime();
 
 	public Events() {
 
 	}
 
-	public Events(Set<UUID> invincible, Map<UUID, Scoreboard> sidebarMap, Map<UUID, CBScoreboard> cbsMap,
-			Objective sidebarObjective, Score kills, Score killStreak, Score killStreakNumber, Score killsNumber,
-			int killsNumberInt, int killStreakNumberInt, CrazyBucket cb) {
+	public Events(Set<UUID> invincible, CrazyBucket cb) {
 		this.invincible = invincible;
-		this.sidebarMap = sidebarMap;
-		this.cbsMap = cbsMap;
-		this.sidebarObjective = sidebarObjective;
-		this.kills = kills;
-		this.killStreak = killStreak;
-		this.killStreakNumber = killStreakNumber;
-		this.killsNumberInt = killsNumberInt;
-		this.killStreakNumberInt = killStreakNumberInt;
 		this.cb = cb;
 	}
 
@@ -93,14 +75,13 @@ public final class Events implements Listener {
 		 * 
 		 * }; br.runTaskTimer(cb, 0, 5); event.getPlayer().setAllowFlight(true);
 		 */
-		CBScoreboard cbs = new CBScoreboard();
-		cbsMap.put(event.getPlayer().getUniqueId(), cbs);
-		cbs.setup(event, invincible, sidebarMap, sidebarObjective, kills, killsNumber, killStreak, killStreakNumber);
+		
+		CBScoreboard.setup(event.getPlayer());
 	}
 
 	@EventHandler
 	public void logOut(PlayerQuitEvent event) {
-		cbsMap.remove(event.getPlayer());
+		CBScoreboard.cbsMap.remove(event.getPlayer());
 	}
 
 	// Scoreboard
@@ -125,9 +106,16 @@ public final class Events implements Listener {
 				String line1 = sign.getLine(0);
 				String line2 = sign.getLine(1);
 				if (line1.equals(ChatColor.DARK_BLUE + "-Kit-")) {
-					Kits k = KitHandler.toEnum(line2);
-					if (k != null) {
-						KitHandler.select(k, event.getPlayer(), event);
+					boolean foundKit = false;
+					for (Kit kit : KitHandler.registeredKits) {
+						if (kit.getName().equals(line2)) {
+							KitHandler.setPlayerKit(p, KitHandler.getKit(line2));
+							foundKit = true;
+							break;
+						}
+					}
+					if (foundKit == false) {
+						event.getPlayer().sendMessage("Error: That is not a kit.");
 					}
 				}
 				Location sl = sign.getLocation();
@@ -176,10 +164,10 @@ public final class Events implements Listener {
 					}
 					if (contents[0] != null && contents[1] != null) {
 						double launchAmount = contents[0].getAmount() + contents[1].getAmount();
-						launch(launchAmount, p);
+						Util.launch(launchAmount, p);
 						return;
 					} else if (contents[0] != null) {
-						launch(contents[0].getAmount(), p);
+						Util.launch(contents[0].getAmount(), p);
 						return;
 					}
 				}
@@ -191,11 +179,6 @@ public final class Events implements Listener {
 	public void towerWrongAnswerDeath(String s) {
 		Bukkit.broadcastMessage(ChatColor.RED + s + ChatColor.WHITE + " chose the wrong answer in the " + ChatColor.AQUA
 				+ "Tower of Challenges");
-	}
-
-	public void launch(double vel, Player p) {
-		Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> p.getPlayer().setVelocity(
-				p.getPlayer().getVelocity().add(new Vector(p.getVelocity().getX(), vel, p.getVelocity().getZ()))));
 	}
 
 	Location v;
@@ -245,20 +228,44 @@ public final class Events implements Listener {
 			Player p = (Player) event.getEntity();
 			if (p.getWorld().getName().equalsIgnoreCase("world") && (p.getHealth() - event.getDamage()) < 1) {
 			}
-
 		}
-
 	}
 
 	@EventHandler
 	public void onDeath(PlayerDeathEvent event) {
 		if ((event.getEntity().getKiller() instanceof Player) && event.getEntity().getKiller() != event.getEntity()) {
 			Player p = (Player) event.getEntity().getKiller();
-			CBScoreboard cbs = cbsMap.get(p.getUniqueId());
-			cbs.addKills(sidebarObjective);
+			CBScoreboard cbs = CBScoreboard.cbsMap.get(p.getUniqueId());
+			// cbs.addKills(cbs.sidebarObjective);
 			DeathMessages.killMessage(event.getEntity().getKiller(), event.getEntity());
 		} else {
 			DeathMessages.message(event.getEntity());
+		}
+		effects.put(event.getEntity().getUniqueId(), event.getEntity().getActivePotionEffects());
+		for (PotionEffect effect : event.getEntity().getActivePotionEffects()) {
+			System.out.println(effect);
+		}
+	}
+
+	@EventHandler
+	public void onRespawn(PlayerRespawnEvent event) {
+		new BukkitRunnable() {
+			@Override
+			public void run() {
+				event.getPlayer().addPotionEffects(effects.get(event.getPlayer().getUniqueId()));
+				for (PotionEffect effect : effects.get(event.getPlayer().getUniqueId())) {
+					System.out.println(effect);
+				}
+			}
+		}.runTaskLater(cb, 1);
+	}
+
+	@EventHandler
+	public void onEntityRegainHealth(EntityRegainHealthEvent event) {
+		if (event.getEntity() instanceof Player) {
+			event.setAmount(event.getAmount() * 0.25);
+			Player p = (Player) event.getEntity();
+			p.setFoodLevel(20);
 		}
 	}
 

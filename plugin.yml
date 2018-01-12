@@ -1,4 +1,12 @@
 name: CrazyBucket
-main: powerlated.CrazyBucket
+main: com.powerlated.CrazyBucket
 version: 1.0
 commands:
+  cbkits:
+    description: List all kits in Crazy Bucket.
+    aliases: [cbk]
+    permission: crazybucket.kitpvp
+    usage: Just type it.
+  addkills:
+  setkills:
+  
